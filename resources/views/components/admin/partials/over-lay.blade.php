@@ -1,0 +1,3 @@
+<!-- Sidebar Overlay -->
+<div @click="sidebarToggle = false" :class="sidebarToggle ? 'block lg:hidden' : 'hidden'"
+    class="fixed w-full h-screen z-9998 bg-gray-900/50 dark:bg-gray-900/70 backdrop-blur-sm"></div>

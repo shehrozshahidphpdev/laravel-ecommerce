@@ -1,0 +1,316 @@
+/* ========================================
+   TOAST NOTIFICATION SYSTEM - BULLETPROOF
+   Works with Bootstrap, Tailwind, and ALL frameworks
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap');
+
+:root {
+    --toast-success: #10b981;
+    --toast-warning: #f59e0b;
+    --toast-error: #ef4444;
+    --toast-info: #3b82f6;
+    --toast-bg: #ffffff;
+    --toast-text: #1f2937;
+    --toast-shadow: rgba(0, 0, 0, 0.1);
+    --toast-border: rgba(0, 0, 0, 0.05);
+}
+
+/* Container - Higher z-index than Bootstrap modals */
+.toast-container {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    pointer-events: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+}
+
+/* Toast Item - Override Bootstrap's .toast class */
+.toast-container > .toast,
+.toast-container .toast {
+    background: var(--toast-bg) !important;
+    border-radius: 12px !important;
+    padding: 16px 20px !important;
+    min-width: 320px !important;
+    max-width: 420px !important;
+    box-shadow: 
+        0 10px 25px -5px var(--toast-shadow),
+        0 8px 10px -6px var(--toast-shadow) !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    position: relative !important;
+    pointer-events: all !important;
+    cursor: pointer !important;
+    border: 1px solid var(--toast-border) !important;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    width: auto !important;
+    opacity: 1 !important;
+    transition: none !important;
+    
+    /* Animation */
+    animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    transform-origin: right center !important;
+}
+
+.toast-container > .toast.removing,
+.toast-container .toast.removing {
+    animation: slideOutRight 0.3s cubic-bezier(0.6, 0, 0.8, 0.2) forwards !important;
+}
+
+/* Slide Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    to {
+        transform: translateX(120%);
+        opacity: 0;
+    }
+}
+
+/* Progress Bar */
+.toast-container .toast::before {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 3px !important;
+    background: currentColor !important;
+    opacity: 0.2 !important;
+    transform-origin: left !important;
+    animation: progressBar 4s linear forwards !important;
+    z-index: 1 !important;
+}
+
+@keyframes progressBar {
+    from {
+        transform: scaleX(1);
+    }
+    to {
+        transform: scaleX(0);
+    }
+}
+
+/* Toast Icon Container */
+.toast-container .toast-icon {
+    flex-shrink: 0 !important;
+    width: 24px !important;
+    height: 24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50% !important;
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 2 !important;
+}
+
+.toast-container .toast-icon svg {
+    width: 16px !important;
+    height: 16px !important;
+    stroke-width: 2.5 !important;
+    display: block !important;
+    fill: none !important;
+}
+
+/* Toast Content */
+.toast-container .toast-content {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding-top: 2px !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+}
+
+.toast-container .toast-title {
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    color: var(--toast-text) !important;
+    line-height: 1.4 !important;
+    letter-spacing: -0.01em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+.toast-container .toast-message {
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #6b7280 !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+
+/* Close Button */
+.toast-container .toast-close {
+    flex-shrink: 0 !important;
+    width: 20px !important;
+    height: 20px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: none !important;
+    background: none !important;
+    cursor: pointer !important;
+    color: #9ca3af !important;
+    padding: 0 !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+    margin-top: 2px !important;
+    outline: none !important;
+    box-shadow: none !important;
+    z-index: 2 !important;
+}
+
+.toast-container .toast-close:hover,
+.toast-container .toast-close:focus {
+    background: #f3f4f6 !important;
+    color: var(--toast-text) !important;
+    outline: none !important;
+}
+
+.toast-container .toast-close svg {
+    width: 14px !important;
+    height: 14px !important;
+    stroke-width: 2.5 !important;
+    display: block !important;
+    fill: none !important;
+}
+
+/* Success Toast */
+.toast-container .toast.toast-success {
+    color: var(--toast-success) !important;
+    border-left: 3px solid var(--toast-success) !important;
+}
+
+.toast-container .toast.toast-success .toast-icon {
+    background: rgba(16, 185, 129, 0.1) !important;
+    color: var(--toast-success) !important;
+}
+
+/* Warning Toast */
+.toast-container .toast.toast-warning {
+    color: var(--toast-warning) !important;
+    border-left: 3px solid var(--toast-warning) !important;
+}
+
+.toast-container .toast.toast-warning .toast-icon {
+    background: rgba(245, 158, 11, 0.1) !important;
+    color: var(--toast-warning) !important;
+}
+
+/* Error Toast */
+.toast-container .toast.toast-error {
+    color: var(--toast-error) !important;
+    border-left: 3px solid var(--toast-error) !important;
+}
+
+.toast-container .toast.toast-error .toast-icon {
+    background: rgba(239, 68, 68, 0.1) !important;
+    color: var(--toast-error) !important;
+}
+
+/* Info Toast */
+.toast-container .toast.toast-info {
+    color: var(--toast-info) !important;
+    border-left: 3px solid var(--toast-info) !important;
+}
+
+.toast-container .toast.toast-info .toast-icon {
+    background: rgba(59, 130, 246, 0.1) !important;
+    color: var(--toast-info) !important;
+}
+
+/* Hover Effects */
+.toast-container .toast:hover {
+    box-shadow: 
+        0 20px 30px -10px var(--toast-shadow),
+        0 10px 15px -8px var(--toast-shadow) !important;
+    transform: translateY(-2px) !important;
+    transition: all 0.2s ease !important;
+}
+
+.toast-container .toast:hover::before {
+    animation-play-state: paused !important;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .toast-container {
+        top: 10px !important;
+        right: 10px !important;
+        left: 10px !important;
+    }
+    
+    .toast-container .toast {
+        min-width: auto !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --toast-bg: #1f2937;
+        --toast-text: #f9fafb;
+        --toast-shadow: rgba(0, 0, 0, 0.4);
+        --toast-border: rgba(255, 255, 255, 0.1);
+    }
+    
+    .toast-container .toast-message {
+        color: #9ca3af !important;
+    }
+    
+    .toast-container .toast-close:hover {
+        background: #374151 !important;
+    }
+}
+
+/* Override Bootstrap's toast styles completely */
+.toast-container .toast.show {
+    opacity: 1 !important;
+    display: flex !important;
+}
+
+.toast-container .toast:not(.show) {
+    display: flex !important;
+    opacity: 1 !important;
+}
+
+.toast-container .toast .toast-header {
+    display: none !important;
+}
+
+.toast-container .toast .toast-body {
+    padding: 0 !important;
+    color: inherit !important;
+}
