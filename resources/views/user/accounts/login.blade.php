@@ -101,7 +101,7 @@
                                     <label for="remeber">Remember me</label>
                                 </div>
                                 <div class="tp-login-forgot">
-                                    <a href="forgot.html">Forgot Password?</a>
+                                    <a href="{{ route('user.account.recover') }}">Forgot Password?</a>
                                 </div>
                             </div>
                             <div class="tp-login-bottom d-grid gap-2">
@@ -109,7 +109,7 @@
                                 <button type="submit" class="tp-login-btn btn btn-primary w-100">Login</button>
 
                                 <!-- Google Sign-In Button -->
-                                <a href="#" class="btn btn-danger w-100">
+                                <a href="{{ route('user.auth.google') }}" class="btn btn-danger w-100">
                                     <i class="fab fa-google me-2"></i> Sign in with Google
                                 </a>
                             </div>

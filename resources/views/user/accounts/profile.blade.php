@@ -28,9 +28,7 @@
                   <button class="nav-link" id="nav-order-tab" data-bs-toggle="tab" data-bs-target="#nav-order"
                     type="button" role="tab" aria-controls="nav-order" aria-selected="false"><span><i
                         class="fa-light fa-clipboard-list-check"></i></span> My Orders </button>
-                  <button class="nav-link" id="nav-notification-tab" data-bs-toggle="tab"
-                    data-bs-target="#nav-notification" type="button" role="tab" aria-controls="nav-notification"
-                    aria-selected="false"><span><i class="fa-regular fa-bell"></i></span> Notification</button>
+
                   <button class="nav-link" id="nav-password-tab" data-bs-toggle="tab" data-bs-target="#nav-password"
                     type="button" role="tab" aria-controls="nav-password" aria-selected="false"><span><i
                         class="fa-regular fa-lock"></i></span> Change Password</button>
@@ -252,12 +250,13 @@
                 </div>
                 <div class="tab-pane fade" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
                   <div class="profile__password">
-                    <form action="#">
+                    <x-form id="change-password">
                       <div class="row">
                         <div class="col-xxl-12">
                           <div class="tp-profile-input-box">
                             <div class="tp-contact-input">
-                              <input name="current-password" id="current-password" type="password">
+                              <input name="current_password" id="current-password" type="password">
+                              <span class="text-danger current_password_error"></span>
                             </div>
                             <div class="tp-profile-input-title">
                               <label for="current-password">Old Password</label>
@@ -268,6 +267,7 @@
                           <div class="tp-profile-input-box">
                             <div class="tp-profile-input">
                               <input name="new_password" id="new-password" type="password">
+                              <span class="text-danger new_password_error"></span>
                             </div>
                             <div class="tp-profile-input-title">
                               <label for="new-password">New Password</label>
@@ -277,7 +277,7 @@
                         <div class="col-xxl-6 col-md-6">
                           <div class="tp-profile-input-box">
                             <div class="tp-profile-input">
-                              <input name="confirm_new_password" id="confirm-new-password" type="password">
+                              <input name="new_password_confirmation" id="confirm-new-password" type="password">
                             </div>
                             <div class="tp-profile-input-title">
                               <label for="confirm-new-password">Confirm Password</label>
@@ -290,7 +290,7 @@
                           </div>
                         </div>
                       </div>
-                    </form>
+                    </x-form>
                   </div>
                 </div>
                 <div class="tab-pane fade" id="nav-address" role="tabpanel" aria-labelledby="nav-address-tab">
@@ -320,13 +320,13 @@
                           </div>
                           <div class="profile__address-content flex-grow">
                             <h3 class="profile__address-title">Billing Address</h3>
-                            <p><span>Street:</span>3576 Glen Street</p>
-                            <p><span>City:</span>Summer Shade</p>
-                            <p><span>State/province/area:</span>Kentucky</p>
-                            <p><span>Phone number:</span>270-428-8378</p>
-                            <p><span>Zip code:</span>42166</p>
-                            <p><span>Country calling code:</span> +1</p>
-                            <p><span>Country:</span>United States</p>
+                            <p><span>Street:</span>{{ $billingAddress->street ?? 'N/A' }}</p>
+                            <p><span>City:</span>{{ $billingAddress->city ?? 'N/A' }}</p>
+                            <p><span>State/province/area:</span>{{ $billingAddress->state ?? 'N/A' }}</p>
+                            <p><span>Phone number:</span>{{ $billingAddress->phone ?? 'N/A' }}</p>
+                            <p><span>Zip code:</span>{{ $billingAddress->zip_code ?? 'N/A' }}</p>
+                            <p><span>Country calling code:</span> {{ $billingAddress->country_code ?? 'N/A' }}</p>
+                            <p><span>Country:</span>{{ $billingAddress->country ?? 'N/A' }}</p>
 
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                               data-bs-target="#billingAddressModal">
@@ -346,43 +346,64 @@
                                       <div class="mb-3">
                                         <label class="form-label">Street</label>
                                         <input type="text" name="street" class="form-control"
-                                          placeholder="Enter street address">
+                                          placeholder="Enter street address"
+                                          value="{{ $billingAddress->street ?? '' }}">
+                                        <span class="billing-street-error"></span>
                                       </div>
 
                                       {{-- City & State --}}
                                       <div class="row">
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">City</label>
-                                          <input type="text" name="city" class="form-control" placeholder="Enter city">
+                                          <input type="text" name="city" class="form-control" placeholder="Enter city"
+                                            value="{{ $billingAddress->city ?? '' }}">
+                                          <span class="billing-city-error"></span>
                                         </div>
 
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">State</label>
-                                          <input type="text" name="state" class="form-control"
-                                            placeholder="Enter state">
+                                          <input type="text" name="state" class="form-control" placeholder="Enter state"
+                                            value="{{ $billingAddress->state ?? '' }}">
+                                          <span class="billing-state-error"></span>
                                         </div>
                                       </div>
 
                                       {{-- Phone & Zip --}}
                                       <div class="row">
+                                        {{-- BILLING PHONE INPUT --}}
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">Phone</label>
-                                          <input type="text" name="phone" class="form-control"
-                                            placeholder="+1 234 567 890">
+                                          <input type="tel" name="phone_display" id="billing-phone" class="form-control"
+                                            value="{{ $billingAddress->phone ?? '' }}">
+
+                                          {{-- Hidden fields for country code and phone --}}
+                                          <input type="hidden" name="country_code" id="billing-country-code">
+                                          <input type="hidden" name="phone" id="billing-phone-number">
+
+                                          <span class="text-danger billing-phone-error"></span>
                                         </div>
 
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">Zip Code</label>
-                                          <input type="number" name="zip_code" class="form-control" placeholder="12345">
+                                          <input type="number" name="zip_code" class="form-control
+                                          
+                                          " placeholder="12345" value="{{ $billingAddress->zip_code ?? '' }}">
+                                          <span class="billing-zipcode-error"></span>
                                         </div>
                                       </div>
 
-                                      {{-- Country --}}
-                                      <div class="mb-4">
-                                        <label class="form-label">Country</label>
-                                        <input type="text" name="country" class="form-control"
-                                          placeholder="Enter country">
+                                      <div class="row g-3">
+                                        {{-- Country --}}
+                                        <div class="col-md-6">
+                                          <label class="form-label fw-semibold">Country</label>
+                                          <input type="text" name="country" class="form-control"
+                                            placeholder="e.g. Pakistan" value="{{ $billingAddress->country ?? '' }}">
+
+                                          <small class="text-danger billing-country"></small>
+                                        </div>
+
                                       </div>
+
 
                                       {{-- Submit --}}
                                       <div class="text-end">
@@ -423,13 +444,13 @@
                           </div>
                           <div class="profile__address-content">
                             <h3 class="profile__address-title">Shipping Address</h3>
-                            <p><span>Street:</span>3133 Lewis Street</p>
-                            <p><span>City:</span>Naperville</p>
-                            <p><span>State/province/area:</span>Illinois</p>
-                            <p><span>Phone number:</span>630-857-9127</p>
-                            <p><span>Zip code:</span> 60563</p>
-                            <p><span>Country calling code:</span>+1</p>
-                            <p><span>Country:</span>United States</p>
+                            <p><span>Street:</span>{{ $shippingAddress->street ?? 'N/A' }}</p>
+                            <p><span>City:</span>{{ $shippingAddress->city ?? 'N/A' }}</p>
+                            <p><span>State/province/area:</span>{{ $shippingAddress->state ?? 'N/A' }}</p>
+                            <p><span>Phone number:</span>{{ $shippingAddress->phone ?? 'N/A' }}</p>
+                            <p><span>Zip code:</span>{{ $shippingAddress->zip_code ?? 'N/A' }}</p>
+                            <p><span>Country calling code:</span> {{ $shippingAddress->country_code ?? 'N/A' }}</p>
+                            <p><span>Country:</span>{{ $shippingAddress->country ?? 'N/A' }}</p>
 
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                               data-bs-target="#shippingAddressModal">
@@ -445,12 +466,14 @@
                                   </div>
 
                                   <div class="modal-body container">
-                                    <x-form action="{{ route('user.account.address') }}">
+                                    <x-form id="shipping-form">
                                       <input type="hidden" name="address_type" value="shipping">
                                       <div class="mb-3">
                                         <label class="form-label">Street</label>
                                         <input type="text" name="street" class="form-control"
                                           placeholder="Enter street address">
+                                        <span class="text-danger shipping-street"></span>
+
                                       </div>
 
                                       {{-- City & State --}}
@@ -458,42 +481,61 @@
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">City</label>
                                           <input type="text" name="city" class="form-control" placeholder="Enter city">
+                                          <span class="text-danger shipping-city"></span>
+
                                         </div>
 
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">State</label>
                                           <input type="text" name="state" class="form-control"
                                             placeholder="Enter state">
+                                          <span class="text-danger shipping-state"></span>
+
                                         </div>
                                       </div>
 
                                       {{-- Phone & Zip --}}
                                       <div class="row">
+                                        {{-- SHIPPING PHONE INPUT --}}
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">Phone</label>
-                                          <input type="text" name="phone" class="form-control"
-                                            placeholder="+1 234 567 890">
+                                          <input type="tel" name="phone_display" id="shipping-phone"
+                                            class="form-control" value="{{ $shippingAddress->phone ?? '' }}">
+
+                                          {{-- Hidden fields for country code and phone --}}
+                                          <input type="hidden" name="country_code" id="shipping-country-code">
+                                          <input type="hidden" name="phone" id="shipping-phone-number">
+
+                                          <span class="text-danger shipping-phone-error"></span>
                                         </div>
 
                                         <div class="col-md-6 mb-3">
                                           <label class="form-label">Zip Code</label>
                                           <input type="number" name="zip_code" class="form-control" placeholder="12345">
+                                          <span class="text-danger shipping-zip_code"></span>
+
+                                        </div>
+                                      </div>
+                                      <div class="row">
+
+                                        {{-- Country --}}
+
+                                        <div class="mb-4 col-md-6">
+                                          <label class="form-label">Country</label>
+                                          <input type="text" name="country" class="form-control"
+                                            placeholder="Enter country">
+                                          <span class="text-danger shipping-country"></span>
+
+                                        </div>
+
+                                        {{-- Submit --}}
+                                        <div class="text-end">
+                                          <button type="submit" class="btn btn-primary px-4">
+                                            Save Address
+                                          </button>
                                         </div>
                                       </div>
 
-                                      {{-- Country --}}
-                                      <div class="mb-4">
-                                        <label class="form-label">Country</label>
-                                        <input type="text" name="country" class="form-control"
-                                          placeholder="Enter country">
-                                      </div>
-
-                                      {{-- Submit --}}
-                                      <div class="text-end">
-                                        <button type="submit" class="btn btn-primary px-4">
-                                          Save Address
-                                        </button>
-                                      </div>
                                     </x-form>
 
                                   </div>
@@ -552,47 +594,7 @@
                     </table>
                   </div>
                 </div>
-                <div class="tab-pane fade" id="nav-notification" role="tabpanel" aria-labelledby="nav-notification-tab">
-                  <div class="profile__notification">
-                    <div class="profile__notification-top mb-30">
-                      <h3 class="profile__notification-title">My activity settings</h3>
-                      <p>Stay up to date with notification on activity that involves you including mentions, messages,
-                        replies to your bids, new items, sale and administrative updates </p>
-                    </div>
-                    <div class="profile__notification-wrapper">
-                      <div class="profile__notification-item mb-20">
-                        <div class="form-check form-switch d-flex align-items-center">
-                          <input class="form-check-input" type="checkbox" role="switch" id="like" checked>
-                          <label class="form-check-label" for="like">Like & Follows Notifications</label>
-                        </div>
-                      </div>
-                      <div class="profile__notification-item mb-20">
-                        <div class="form-check form-switch d-flex align-items-center">
-                          <input class="form-check-input" type="checkbox" role="switch" id="post" checked>
-                          <label class="form-check-label" for="post">Post, Comments & Replies Notifications</label>
-                        </div>
-                      </div>
-                      <div class="profile__notification-item mb-20">
-                        <div class="form-check form-switch d-flex align-items-center">
-                          <input class="form-check-input" type="checkbox" role="switch" id="new" checked>
-                          <label class="form-check-label" for="new">New Product Notifications</label>
-                        </div>
-                      </div>
-                      <div class="profile__notification-item mb-20">
-                        <div class="form-check form-switch d-flex align-items-center">
-                          <input class="form-check-input" type="checkbox" role="switch" id="sale" checked>
-                          <label class="form-check-label" for="sale">Product on sale Notifications</label>
-                        </div>
-                      </div>
-                      <div class="profile__notification-item mb-20">
-                        <div class="form-check form-switch d-flex align-items-center">
-                          <input class="form-check-input" type="checkbox" role="switch" id="payment" checked>
-                          <label class="form-check-label" for="payment">Payment Notifications</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
           </div>
@@ -602,90 +604,189 @@
   </section>
   @push('script')
     <script>
-      // $(document).ready(function () {
-      //   $('.avatar').on('change', function () {
-      //     $.ajaxSetup({
-      //       headers: {
-      //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      //       }
-      //     })
-      //     let file = this.files[0];
-      //     let photo = new FormData;
-      //     photo.append('photo', file);
-      //     $.ajax({
-      //       url: "{{ route('user.account.upload-photo') }}",
-      //       type: "POST",
-      //       dataType: 'JSON',
-      //       data: {
+      document.addEventListener('DOMContentLoaded', function () {
 
-      //       },
 
-      //       success: function (response) {
-      //         console.log(response)
-      //       },
+        document.querySelector('.avatar').addEventListener('change', function () {
+          const avatarForm = document.getElementById('avatar-form');
+          avatarForm.submit();
+        });
 
-      //       error: function (xhr) {
-      //         console.log(xhr.responseText)
-      //         console.log("Failed to upload photo")
-      //       }
-      //     })
-      //   });
-      // });
-      // document.querySelector('.avatar').addEventListener('change', function (e) {
-      //   const file = e.target.files[0];
-      //   if (!file) {
-      //     console.log('file not found')
-      //     return;
-      //   }
-      //   const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-      //   const formData = new FormData();
-      //   formData.append('avatar', file);
-      //   fetch("{{ route('user.account.upload-photo') }}", {
-      //     method: 'POST',
-      //     body: formData,
-      //     headers: {
-      //       "X-CSRF-TOKEN": token,
-      //       'Accept': 'application/json',
-      //     },
-      //   })
-      //     .then((response) => {
-      //       console.log(response.json());
-      //       return response.json();
-      //     })
-      //     .then((data) => {
-      //       if (data.error && data.error.avatar) {
-      //         console.log(data.error.avatar);
-      //       }
-      //     })
-      //     .catch(() => {
-      //       console.log("Some Thing Went Wrong:")
-      //     })
-      // })
-      document.querySelector('.avatar').addEventListener('change', function () {
-        const avatarForm = document.getElementById('avatar-form');
-        avatarForm.submit();
-      })
-      document.getElementById('billing-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        fetch("{{ route('user.account.address') }}", {
-          method: 'post',
-          body: formData,
-          headers: {
-            'X-CSRF-TOKEN': token,
-            'Accept': "application/json",
+        // ============================================
+        // BILLING PHONE INITIALIZATION
+        // ============================================
+        const billingPhoneInput = document.querySelector("#billing-phone");
+        const billingIti = window.intlTelInput(billingPhoneInput, {
+          initialCountry: "{{ $billingAddress->country_code ?? 'pk' }}",
+          preferredCountries: ["pk", "us", "gb", "ae", "sa"],
+          separateDialCode: true,
+          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+        });
+
+        // ============================================
+        // SHIPPING PHONE INITIALIZATION
+        // ============================================
+        const shippingPhoneInput = document.querySelector("#shipping-phone");
+        const shippingIti = window.intlTelInput(shippingPhoneInput, {
+          initialCountry: "{{ $shippingAddress->country_code ?? 'pk' }}",
+          preferredCountries: ["pk", "us", "gb", "ae", "sa"],
+          separateDialCode: true,
+          utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/utils.js",
+        });
+
+        // ============================================
+        // BILLING FORM SUBMIT HANDLER
+        // ============================================
+        document.getElementById('billing-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Validate phone number
+          if (billingPhoneInput.value.trim() && !billingIti.isValidNumber()) {
+            document.querySelector('.billing-phone-error').textContent =
+              'Please enter a valid phone number for the selected country';
+            return false;
           }
-        })
-          .then(response => response.json())
-          .then(result => {
-            console.log(result)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      });
 
+          // Clear previous errors
+          document.querySelector('.billing-phone-error').textContent = '';
+
+          // Get country data
+          const billingCountryData = billingIti.getSelectedCountryData();
+
+          // Set hidden fields
+          document.getElementById('billing-country-code').value =
+            billingCountryData.iso2.toUpperCase();
+          document.getElementById('billing-phone-number').value =
+            billingIti.getNumber().replace(/\D/g, ''); // Remove all non-digits
+
+          // Create FormData
+          const formData = new FormData(this);
+          const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+          fetch("{{ route('user.account.address') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRF-TOKEN': token,
+              'Accept': 'application/json',
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                window.location.reload();
+              } else if (data.errors) {
+                // Display validation errors
+                Object.keys(data.errors).forEach(key => {
+                  const errorElement = document.querySelector(`.billing-${key}-error`);
+                  if (errorElement) {
+                    errorElement.textContent = data.errors[key][0];
+                  }
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('An error occurred. Please try again.');
+            });
+        });
+
+        // ============================================
+        // SHIPPING FORM SUBMIT HANDLER
+        // ============================================
+        document.getElementById('shipping-form').addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Validate phone number
+          if (shippingPhoneInput.value.trim() && !shippingIti.isValidNumber()) {
+            document.querySelector('.shipping-phone-error').textContent =
+              'Please enter a valid phone number for the selected country';
+            return false;
+          }
+
+          // Clear previous errors
+          document.querySelector('.shipping-phone-error').textContent = '';
+
+          // Get country data
+          const shippingCountryData = shippingIti.getSelectedCountryData();
+
+          // Set hidden fields
+          document.getElementById('shipping-country-code').value =
+            shippingCountryData.iso2.toUpperCase();
+          document.getElementById('shipping-phone-number').value =
+            shippingIti.getNumber().replace(/\D/g, ''); // Remove all non-digits
+
+          // Create FormData
+          const formData = new FormData(this);
+          const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+          fetch("{{ route('user.account.address') }}", {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'X-CSRF-TOKEN': token,
+              'Accept': 'application/json',
+            }
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                window.location.reload();
+              } else if (data.errors) {
+                // Display validation errors
+                Object.keys(data.errors).forEach(key => {
+                  const errorElement = document.querySelector(`.shipping-${key}`);
+                  if (errorElement) {
+                    errorElement.textContent = data.errors[key][0];
+                  }
+                });
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              alert('An error occurred. Please try again.');
+            });
+        });
+
+        // password change handler
+        const passwordForm = document.getElementById('change-password');
+        const currentError = document.querySelector('.current_password_error');
+        const newError = document.querySelector('.new_password_error');
+        passwordForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const data = new FormData(this);
+          const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+          fetch("{{ route('user.account.change-password') }}", {
+            method: 'POST',
+            headers: {
+              'X-CSRF-TOKEN': token,
+              'Accept': 'application/json',
+            },
+            body: data
+          })
+            .then(response => response.json())
+            .then((data) => {
+              currentError.innerHTML = '';
+              newError.innerHTML = '';
+              if (data.errors) {
+                if (data.errors.current_password) {
+                  currentError.innerHTML = data.errors.current_password[0];
+                }
+                if (data.errors.new_password) {
+                  newError.innerHTML = data.errors.new_password[0];
+                }
+              }
+              if (data.success) {
+                window.location.reload();
+              }
+            })
+            .catch((errors) => {
+              console.log(errors);
+            });
+        });
+      });
     </script>
   @endpush
   <!-- profile area end -->

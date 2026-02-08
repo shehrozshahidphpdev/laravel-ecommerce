@@ -56,6 +56,24 @@
               </span>
             </a>
           </li>
+          {{-- categories --}}
+          <li>
+            <a href="{{ route('') }}"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M8.74992 18.3333H2.08325C1.16659 18.3333 0.416586 17.5833 0.416586 16.6667V4.16667C0.416586 3.25 1.16659 2.5 2.08325 2.5H8.74992C9.66659 2.5 10.4166 3.25 10.4166 4.16667V16.6667C10.4166 17.5833 9.66659 18.3333 8.74992 18.3333ZM2.08325 4.16667V16.6667H8.74992V4.16667H2.08325Z" />
+                <path
+                  d="M17.9166 18.3333H11.2499C10.3333 18.3333 9.58325 17.5833 9.58325 16.6667V10.8333C9.58325 9.91667 10.3333 9.16667 11.2499 9.16667H17.9166C18.8333 9.16667 19.5833 9.91667 19.5833 10.8333V16.6667C19.5833 17.5833 18.8333 18.3333 17.9166 18.3333ZM11.2499 10.8333V16.6667H17.9166V10.8333H11.2499Z" />
+                <path
+                  d="M17.9166 7.5H11.2499C10.3333 7.5 9.58325 6.75 9.58325 5.83333V3.33333C9.58325 2.41667 10.3333 1.66667 11.2499 1.66667H17.9166C18.8333 1.66667 19.5833 2.41667 19.5833 3.33333V5.83333C19.5833 6.75 18.8333 7.5 17.9166 7.5ZM11.2499 3.33333V5.83333H17.9166V3.33333H11.2499Z" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Categories
+              </span>
+            </a>
+          </li>
 
           <!-- Menu Item Calendar -->
           <li>
@@ -102,18 +120,6 @@
             </a>
           </li>
         </ul>
-      </div>
-
-      <!-- Promo Box -->
-      <div :class="sidebarToggle ? 'lg:hidden' : ''" class="mt-auto pt-6 pb-6">
-        <div class="rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 p-5 text-white">
-          <h3 class="text-base font-semibold mb-2">Upgrade to Pro</h3>
-          <p class="text-sm mb-4 text-blue-100">Get access to all features and premium support</p>
-          <button
-            class="w-full bg-white text-blue-600 font-medium py-2.5 px-4 rounded-lg hover:bg-blue-50 transition-colors">
-            Upgrade Now
-          </button>
-        </div>
       </div>
     </nav>
   </div>

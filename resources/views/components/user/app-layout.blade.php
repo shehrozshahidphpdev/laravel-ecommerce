@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="{{ asset('user/assets/css/font-awesome-pro.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
+    {{-- intel tel input cdn link --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
+
     @stack('styles')
 </head>
 
@@ -35,9 +38,7 @@
     <x-user.partials.desktop-header />
     <x-user.partials.mobile-header />
 
-    <main>
-        {{ $slot }}
-    </main>
+    <main> {{ $slot }} </main>
 
     <x-user.partials.footer />
 
@@ -64,6 +65,9 @@
     {{-- Toast JS - KEEP THIS AT THE END --}}
     {{-- MOVE TOAST COMPONENT HERE - RIGHT AFTER BODY TAG --}}
     <script src="{{ asset('assets/js/toast.js') }}"></script>
+    {{-- intel tel input cdn script link --}}
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
+
     @stack('script')
 </body>
 

@@ -140,8 +140,8 @@
                     </span>
                   </div>
                   <div class="tp-header-login-content d-none d-xl-block">
-                    @if(Auth::check())
-                      <span>Hello, {{ Auth::user()->name }}</span>
+                    @if(auth()->guard('customer')->check())
+                      <span>Hello, {{ auth()->guard('customer')->user()->name }}</span>
                     @else
                       <span>Hello, Sign In</span>
                     @endif

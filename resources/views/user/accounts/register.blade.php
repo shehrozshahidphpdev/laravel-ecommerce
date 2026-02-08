@@ -19,12 +19,6 @@
 
     <!-- login area start -->
     <section class="tp-login-area pb-140 p-relative z-index-1 fix">
-        <div class="tp-login-shape">
-            <img class="tp-login-shape-1" src="{{ asset('user/assets/img/login/login-shape-1.png') }}" alt="">
-            <img class="tp-login-shape-2" src="{{ asset('user/assets/img/login/login-shape-2.png') }}" alt="">
-            <img class="tp-login-shape-3" src="{{ asset('user/assets/img/login/login-shape-3.png') }}" alt="">
-            <img class="tp-login-shape-4" src="{{ asset('user/assets/img/login/login-shape-4.png') }}" alt="">
-        </div>
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-xl-6 col-lg-8">
@@ -171,7 +165,8 @@
                                 </div>
                                 <div class="tp-login-bottom">
                                     <button type="submit" class="tp-login-btn w-100 mb-2">Sign Up</button>
-                                    <a href="#" class="tp-login-btn bg-danger d-block text-center">Sign Up With
+                                    <a href="{{ route('user.auth.google') }}"
+                                        class="tp-login-btn bg-danger d-block text-center">Sign Up With
                                         Google</a>
                                 </div>
                             </x-form>

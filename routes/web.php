@@ -14,6 +14,7 @@ require __DIR__ . '/user-accounts.php';
 
 Route::middleware('auth')->group(function () {
     require __DIR__ . '/admin.php';
+    require __DIR__ . '/categories.php';
 });
 
 Route::get('demo', [TestController::class, 'demo']);
