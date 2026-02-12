@@ -58,7 +58,7 @@
           </li>
           {{-- categories --}}
           <li>
-            <a href="{{ route('') }}"
+            <a href="{{ route('categories.index') }}"
               class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
               <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
                 xmlns="http://www.w3.org/2000/svg">

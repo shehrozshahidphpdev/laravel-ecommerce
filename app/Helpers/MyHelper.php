@@ -35,6 +35,7 @@ class MyHelper
 
   public static function removeFile($file)
   {
+
     $filePath = storage_path('app/public/' . $file);
 
     if (file_exists($filePath)) {

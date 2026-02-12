@@ -1,4 +1,4 @@
-@props(['title'])
+@props(['title', 'categories'])
 
 <!doctype html>
 <html class="no-js" lang="zxx">
@@ -35,7 +35,7 @@
     <x-user.partials.mobile-menu />
     <x-user.partials.mobile-seach-bar />
     <x-user.partials.mini-cart />
-    <x-user.partials.desktop-header />
+    <x-user.partials.desktop-header :categories="$categories" />
     <x-user.partials.mobile-header />
 
     <main> {{ $slot }} </main>
