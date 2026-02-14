@@ -17,7 +17,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories  = Category::with('parent')->get();
+        $categories  = Category::with('parent')
+            ->ordered()
+            ->paginate(10);
         // return $categories;
         return view('admin.categories.list', [
             'categories' => $categories
@@ -40,6 +42,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'slug' => 'string|nullable|max:50|unique:categories',
@@ -53,6 +57,9 @@ class CategoryController extends Controller
             Category::create([
                 'name' => $request->input('name'),
                 'slug' => $request->slug ?? Str::slug($request->name),
+                // 'tags' => array_map(function ($item) {
+                //     return ucwords($item);
+                // }, $request->tags),
                 'tags' => $request->tags,
                 'image' => $imagePath,
                 'category_icon' => $iconPath,
@@ -152,13 +159,16 @@ class CategoryController extends Controller
     public function destroy(string $id)
     {
         $category = Category::find($id);
-        if (MyHelper::removeFile($category->image)) {
+
+        if (isset($category->image)) {
+            MyHelper::removeFile($category->image);
             Log::info('image removed successfully from the storage disk', [
                 'category_id' => $id
             ]);
         }
 
-        if (MyHelper::removeFile($category->category_icon)) {
+        if (isset($category->category_icon)) {
+            MyHelper::removeFile($category->category_icon);
             Log::info('category icon removed successfully from the storage disk', [
                 'cat_id' => $id
             ]);

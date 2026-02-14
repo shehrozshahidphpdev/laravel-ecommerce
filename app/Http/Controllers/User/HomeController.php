@@ -11,6 +11,7 @@ class HomeController extends Controller
     public function index()
     {
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
+        // dd($categories);
         // return $categories;
         return view('user.index', [
             'categories' => $categories

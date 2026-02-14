@@ -83,6 +83,10 @@
               </th>
               <th
                 class="w-1/6 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
+                Tags
+              </th>
+              <th
+                class="w-1/6 px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600 dark:text-gray-400">
                 Actions
               </th>
 
@@ -122,6 +126,11 @@
                       alt="category icon" class="h-full w-full object-cover" />
                   </div>
                 </td>
+                <td class="px-6 py-4 overflow-hidden">
+                  <span
+                    class="text-sm text-gray-700 dark:text-gray-300">{{ Str::limit(implode(',', $category->tags), 20, '...') }}</span>
+                </td>
+
                 {{-- delete btn --}}
                 <td class="px-6 py-4">
                   <div class="flex flex-row gap-2">
@@ -143,7 +152,7 @@
                     <a href="{{ route('categories.edit', $category->id) }}">
                       <span
                         class=" inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold
-                                                                            text-sky-800 dark:bg-sky-500/20 dark:text-sky-400">
+                                                                                                            text-sky-800 dark:bg-sky-500/20 dark:text-sky-400">
                         <svg
                           class="cursor-pointer hover:fill-primary-500 dark:hover:fill-primary-500 fill-gray-700 dark:fill-gray-400"
                           width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,6 +173,9 @@
         </table>
       </div>
 
+    </div>
+    <div class="pagination mt-3">
+      {{ $categories->links() }}
     </div>
   </div>
 </x-admin.app-layout>

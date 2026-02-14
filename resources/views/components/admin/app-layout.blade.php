@@ -19,6 +19,9 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
       integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
       crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   {{-- color picker cdn --}}
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+
    <link rel="stylesheet" href="{{ asset('assets/css/toast.css') }}">
 </head>
 
@@ -43,6 +46,9 @@
       </div>
    </div>
    <script src="{{ asset('assets/js/toast.js') }}"></script>
+   {{-- color picker cdn --}}
+   <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+
    @stack('script')
 
 </body>

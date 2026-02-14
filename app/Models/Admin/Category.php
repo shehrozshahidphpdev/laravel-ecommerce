@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
@@ -9,14 +10,38 @@ class Category extends Model
     protected $guarded = [];
 
 
+
+
+    protected function scopeOrdered($query)
+    {
+        $query->orderBy('id', 'desc');
+    }
+
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            set: fn($value) => ucwords($value),
+        );
+    }
+
+
+    protected function tags(): Attribute
+    {
+        return Attribute::make(
+            set: function ($value) {
+                $tags = is_array($value) ? $value : json_decode($value, true);
+                $capitalizedTags = array_map(function ($item) {
+                    return ucwords($item);
+                }, $tags);
+                return json_encode(array_values($capitalizedTags));
+            }
+        );
+    }
+
     protected $casts = [
         'tags' => 'array'
     ];
 
-    public function setNameAttribute($value)
-    {
-        $this->attributes['name'] = ucwords($value);
-    }
 
     /**
      * Category Model
