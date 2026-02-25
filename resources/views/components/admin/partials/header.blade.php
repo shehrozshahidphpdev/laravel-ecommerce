@@ -2,7 +2,7 @@
   class="sticky top-0 z-99999 flex w-full border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
   <div class="flex grow flex-col items-center justify-between lg:flex-row lg:px-6">
     <div
-      class="flex w-full items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-800 px-3 py-3 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
+      class="flex w-full items-center justify-between gap-2 border-b border-gray-200 dark:border-gray-800 px-3  sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 ">
       <!-- Hamburger Toggle BTN -->
       <button :class="sidebarToggle ? 'lg:bg-transparent bg-gray-100 dark:bg-gray-800' : ''"
         class="z-99999 flex h-10 w-10 items-center justify-center rounded-lg border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 lg:h-11 lg:w-11 lg:border"
@@ -48,7 +48,7 @@
       </button>
       <!-- Application nav menu button -->
 
-      <div class="hidden lg:block">
+      {{-- <div class="hidden lg:block">
         <form>
           <div class="relative">
             <span class="absolute top-1/2 left-4 -translate-y-1/2">
@@ -70,7 +70,7 @@
           </div>
         </form>
       </div>
-    </div>
+    </div> --}}
 
     <div :class="menuToggle ? 'flex' : 'hidden'"
       class="shadow-md w-full items-center justify-between gap-4 px-5 py-4 bg-white dark:bg-gray-800 lg:flex lg:justify-end lg:px-0 lg:shadow-none lg:dark:bg-transparent">
@@ -93,6 +93,11 @@
           </svg>
         </button>
         <!-- Dark Mode Toggler -->
+        <style>
+          [x-cloak] {
+            display: none !important;
+          }
+        </style>
 
         <!-- Notification Menu Area -->
         <div class="relative" x-data="{ dropdownOpen: false, notifying: true }" @click.outside="dropdownOpen = false">
@@ -113,7 +118,7 @@
           </button>
 
           <!-- Dropdown Start -->
-          <div x-show="dropdownOpen"
+          <div x-show="dropdownOpen" x-cloak x-transition
             class="shadow-lg absolute -right-[240px] mt-[17px] flex h-[480px] w-[350px] flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 sm:w-[361px] lg:right-0">
             <div class="mb-3 flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
               <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-100">
@@ -190,7 +195,7 @@
         </a>
 
         <!-- Dropdown Start -->
-        <div x-show="dropdownOpen"
+        <div x-show="dropdownOpen" x-cloak x-transition
           class="shadow-lg absolute right-0 mt-[17px] flex w-[260px] flex-col rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3">
           <div>
             <span class="text-sm block font-medium text-gray-700 dark:text-gray-200">

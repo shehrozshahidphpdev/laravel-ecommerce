@@ -9,7 +9,10 @@ class Category extends Model
 {
     protected $guarded = [];
 
-
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 
 
     protected function scopeOrdered($query)
@@ -32,7 +35,7 @@ class Category extends Model
                 $tags = is_array($value) ? $value : json_decode($value, true);
                 $capitalizedTags = array_map(function ($item) {
                     return ucwords($item);
-                }, $tags);
+                }, (array)$tags);
                 return json_encode(array_values($capitalizedTags));
             }
         );

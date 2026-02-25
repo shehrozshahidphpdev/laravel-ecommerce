@@ -1,12 +1,35 @@
+{{-- @push('style') --}}
+<style>
+  .main-header::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .main-header::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .main-header::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.6);
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+    transition: all 0.3s ease;
+  }
+
+  .main-header::-webkit-scrollbar-thumb:hover {
+    background: rgba(107, 114, 128, 0.9);
+  }
+</style>
+{{-- @endpush --}}
+
 <!-- Sidebar -->
 <aside :class="sidebarToggle ? 'translate-x-0 lg:w-[90px]' : '-translate-x-full'"
-  class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 px-5 lg:static lg:translate-x-0 transition-all duration-300 ease-in-out">
+  class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[260px] flex-col overflow-y-hidden border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 px-5 lg:static lg:translate-x-0 transition-all duration-300 ease-in-out">
 
   <!-- SIDEBAR HEADER -->
   <div :class="sidebarToggle ? 'justify-center' : 'justify-between'"
     class="flex items-center border-b border-gray-200 dark:border-gray-800 py-5">
     <a href="#" :class="sidebarToggle ? 'lg:hidden' : ''" class="block">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Laravel Ecommerce</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Welcome</h1>
     </a>
 
     <!-- Logo Icon for collapsed sidebar -->
@@ -16,9 +39,9 @@
       </div>
     </a>
   </div>
-  <!-- SIDEBAR HEADER -->
+  <!-- SIDEBAR HEADER MAIN AREA -->
 
-  <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+  <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar main-header">
     <!-- Sidebar Menu -->
     <nav x-data="{selected: $persist('Dashboard')}" class="mt-5 py-4">
       <!-- Menu Group -->
@@ -71,6 +94,87 @@
               </svg>
               <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                 Categories
+              </span>
+            </a>
+          </li>
+
+
+          {{-- colors --}}
+          <li>
+            <a href="{{ route('colors.index') }}"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2C6.48 2 2 6.03 2 11c0 3.87 3.13 7 7 7h1a1 1 0 0 0 0-2H9c-2.76 0-5-2.24-5-5 0-3.87 3.58-7 8-7s8 3.13 8 7c0 1.66-1.34 3-3 3h-1a1 1 0 0 0 0 2h1c2.76 0 5-2.24 5-5 0-4.97-4.48-9-10-9z" />
+                <circle cx="7.5" cy="10.5" r="1.5" />
+                <circle cx="12" cy="8" r="1.5" />
+                <circle cx="16.5" cy="10.5" r="1.5" />
+              </svg>
+
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Colors
+              </span>
+            </a>
+          </li>
+
+          {{-- tags --}}
+          <li>
+            <a href="{{ route('tags.index') }}"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M20.59 13.41L11 3.83C10.63 3.46 10.12 3.25 9.59 3.25H4C3.45 3.25 3 3.7 3 4.25V9.84C3 10.37 3.21 10.88 3.59 11.25L13.17 20.83C13.95 21.61 15.22 21.61 16 20.83L20.59 16.24C21.37 15.46 21.37 14.19 20.59 13.41ZM7.5 8.75C6.81 8.75 6.25 8.19 6.25 7.5C6.25 6.81 6.81 6.25 7.5 6.25C8.19 6.25 8.75 6.81 8.75 7.5C8.75 8.19 8.19 8.75 7.5 8.75Z" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Tags
+              </span>
+            </a>
+          </li>
+
+          {{-- product --}}
+          <li>
+            <a href="#"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M21 16V8C21 7.45 20.7 6.95 20.22 6.68L12.72 2.68C12.27 2.43 11.73 2.43 11.28 2.68L3.78 6.68C3.3 6.95 3 7.45 3 8V16C3 16.55 3.3 17.05 3.78 17.32L11.28 21.32C11.73 21.57 12.27 21.57 12.72 21.32L20.22 17.32C20.7 17.05 21 16.55 21 16ZM12 4.15L18.74 7.75L12 11.35L5.26 7.75L12 4.15ZM5 9.47L11 12.77V19.85L5 16.55V9.47ZM13 19.85V12.77L19 9.47V16.55L13 19.85Z" />
+              </svg>
+
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Colors
+              </span>
+            </a>
+          </li>
+
+          {{-- Brand --}}
+          <li>
+            <a href="{{ route('brands.index') }}"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2L4 7V17L12 22L20 17V7L12 2ZM12 4.3L18 8V16L12 19.7L6 16V8L12 4.3ZM9 10H15V12H9V10ZM9 13H13V15H9V13Z" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Brands
+              </span>
+            </a>
+          </li>
+
+          {{-- Products --}}
+          <li>
+            <a href="{{ route('products.index') }}"
+              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M12 2L4 7V17L12 22L20 17V7L12 2ZM12 4.3L18 8V16L12 19.7L6 16V8L12 4.3ZM9 10H15V12H9V10ZM9 13H13V15H9V13Z" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                Products
               </span>
             </a>
           </li>

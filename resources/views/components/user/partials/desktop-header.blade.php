@@ -245,12 +245,14 @@
                         </a>
                         @if($category->children->isNotEmpty())
                             @php
-                                $childrenWithImages = $category->children->whereNotNull('image');
+                                $validChildrens = $category->children->filter(function($child) {
+                                  return !is_null($child->image) && !empty($child->tags);
+                                });
                             @endphp
                             {{-- menu with images  --}}
-                            @if($childrenWithImages->isNotEmpty()) 
+                            @if($validChildrens->isNotEmpty()) 
                                 <ul class="mega-menu tp-submenu">
-                                  @foreach ($category->children as $child)
+                                  @foreach ($validChildrens as $child)
                                     <li>
                                       <a href="#" class="mega-menu-title">
                                         {{ $child->name }}

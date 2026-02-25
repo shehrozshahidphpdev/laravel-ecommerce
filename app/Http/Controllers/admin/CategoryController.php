@@ -15,15 +15,36 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $categories  = Category::with('parent')
             ->ordered()
             ->paginate(10);
-        // return $categories;
         return view('admin.categories.list', [
             'categories' => $categories
         ]);
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->search;
+
+        if (empty($query) || strlen($query) < 2) {
+            $categories  = Category::with('parent')
+                ->ordered()
+                ->paginate(10);
+        } else {
+            $categories = Category::where('name', 'like', "%{$query}%")
+                ->orWhere('slug', 'like', "%{$query}%")
+                ->orWhere('parent_id', 'like', "%{$query}%")
+                ->orWhere('tags', 'like', "%{$query}%")
+                ->get();
+        }
+        return response()->json([
+            'status' => true,
+            'categories' => $categories,
+            'message' => 'results sent successfully'
+        ], 200);
     }
 
     /**
@@ -42,14 +63,17 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
 
+        // dd($request->all());
         $request->validate([
             'name' => ['required', 'string', 'max:50'],
             'slug' => 'string|nullable|max:50|unique:categories',
             'image' => ['mimes:png,jpg,webp', 'max:5000'],
             'icon' => ['mimes:png,jpg,webp,svg', 'max:5000']
         ]);
+        $tags = $request->tags;
+
+        $tags = array_filter($tags);
 
         try {
             $imagePath = $request->file('image') ? MyHelper::uploadFile($request->file('image')) : null;
@@ -57,10 +81,7 @@ class CategoryController extends Controller
             Category::create([
                 'name' => $request->input('name'),
                 'slug' => $request->slug ?? Str::slug($request->name),
-                // 'tags' => array_map(function ($item) {
-                //     return ucwords($item);
-                // }, $request->tags),
-                'tags' => $request->tags,
+                'tags' => empty($tags) ? null : $tags,
                 'image' => $imagePath,
                 'category_icon' => $iconPath,
                 'parent_id' => $request->parent_id ?? null,

@@ -20,7 +20,6 @@
     {{-- intel tel input cdn link --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/css/intlTelInput.css">
 
-    @stack('styles')
 </head>
 
 
