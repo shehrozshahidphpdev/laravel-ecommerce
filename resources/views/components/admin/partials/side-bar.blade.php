@@ -181,15 +181,13 @@
 
           <!-- Menu Item Calendar -->
           <li>
-            <a href="#"
+            <a href="{{ route('specifications.index') }}"
               class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500">
-              <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.8333 2.5H14.1666V1.66667C14.1666 1.20833 13.7916 0.833333 13.3333 0.833333C12.8749 0.833333 12.4999 1.20833 12.4999 1.66667V2.5H7.49992V1.66667C7.49992 1.20833 7.12492 0.833333 6.66659 0.833333C6.20825 0.833333 5.83325 1.20833 5.83325 1.66667V2.5H4.16659C2.78325 2.5 1.66659 3.61667 1.66659 5V16.6667C1.66659 18.05 2.78325 19.1667 4.16659 19.1667H15.8333C17.2166 19.1667 18.3333 18.05 18.3333 16.6667V5C18.3333 3.61667 17.2166 2.5 15.8333 2.5ZM4.16659 4.16667H5.83325V5C5.83325 5.45833 6.20825 5.83333 6.66659 5.83333C7.12492 5.83333 7.49992 5.45833 7.49992 5V4.16667H12.4999V5C12.4999 5.45833 12.8749 5.83333 13.3333 5.83333C13.7916 5.83333 14.1666 5.45833 14.1666 5V4.16667H15.8333C16.2916 4.16667 16.6666 4.54167 16.6666 5V7.5H3.33325V5C3.33325 4.54167 3.70825 4.16667 4.16659 4.16667ZM15.8333 17.5H4.16659C3.70825 17.5 3.33325 17.125 3.33325 16.6667V9.16667H16.6666V16.6667C16.6666 17.125 16.2916 17.5 15.8333 17.5Z" />
+              <svg class="fill-current" width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 11l3 3L22 4l-1.5-1.5L12 11 10.5 9.5 9 11zM2 5h6v2H2V5zm0 6h6v2H2v-2zm0 6h6v2H2v-2z" />
               </svg>
               <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                Calendar
+                Specifications
               </span>
             </a>
           </li>

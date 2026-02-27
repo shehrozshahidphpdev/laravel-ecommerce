@@ -139,4 +139,7 @@
       {{ $colors->links() }}
     </div>
   </div>
+  <script>
+    
+  </script>
 </x-admin.app-layout>
