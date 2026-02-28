@@ -19,6 +19,7 @@ Route::prefix('admin/')->middleware('auth')->group(function () {
     require __DIR__ . '/products.php';
     require __DIR__ . '/tinymce.php';
     require __DIR__ . '/specifications.php';
+    require __DIR__ . '/product-specifications.php';
 });
 
 Route::get('demo', [TestController::class, 'demo']);

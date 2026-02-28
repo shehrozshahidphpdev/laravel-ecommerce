@@ -133,21 +133,6 @@
             </a>
           </li>
 
-          {{-- product --}}
-          <li>
-            <a href="#"
-              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('dashboard') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
-              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M21 16V8C21 7.45 20.7 6.95 20.22 6.68L12.72 2.68C12.27 2.43 11.73 2.43 11.28 2.68L3.78 6.68C3.3 6.95 3 7.45 3 8V16C3 16.55 3.3 17.05 3.78 17.32L11.28 21.32C11.73 21.57 12.27 21.57 12.72 21.32L20.22 17.32C20.7 17.05 21 16.55 21 16ZM12 4.15L18.74 7.75L12 11.35L5.26 7.75L12 4.15ZM5 9.47L11 12.77V19.85L5 16.55V9.47ZM13 19.85V12.77L19 9.47V16.55L13 19.85Z" />
-              </svg>
-
-              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                Colors
-              </span>
-            </a>
-          </li>
 
           {{-- Brand --}}
           <li>
@@ -188,21 +173,6 @@
               </svg>
               <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                 Specifications
-              </span>
-            </a>
-          </li>
-
-          <!-- Menu Item Profile -->
-          <li>
-            <a href="{{ route('profile.edit') }}"
-              class="group relative flex items-center gap-3 rounded-lg px-4 py-3 font-medium text-gray-700 dark:text-gray-300 transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-blue-600 dark:hover:text-blue-500 {{ request()->routeIs('profile.edit') ? 'bg-blue-50 dark:bg-gray-800 text-blue-600 dark:text-blue-500' : '' }}">
-              <svg class="fill-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 3C11.66 3 13 4.34 13 6C13 7.66 11.66 9 10 9C8.34 9 7 7.66 7 6C7 4.34 8.34 3 10 3ZM10 17.2C7.5 17.2 5.29 15.92 4 13.98C4.03 11.99 8 10.9 10 10.9C11.99 10.9 15.97 11.99 16 13.98C14.71 15.92 12.5 17.2 10 17.2Z" />
-              </svg>
-              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                Profile
               </span>
             </a>
           </li>
