@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class MyHelper
 {
@@ -26,7 +27,7 @@ class MyHelper
   {
     $destination = "uploads";
 
-    $getFileName = time() . '.' . $file->getClientOriginalExtension();
+    $getFileName = time() . '_' . Str::random(10) . '.'  . $file->getClientOriginalExtension();
 
     $path =  $file->storeAs($destination, $getFileName, 'public');
 
@@ -41,5 +42,8 @@ class MyHelper
     if (file_exists($filePath)) {
       @unlink($filePath);
     }
+    Log::info("File Removed Successfully", [
+      "file_path" => $filePath
+    ]);
   }
 }

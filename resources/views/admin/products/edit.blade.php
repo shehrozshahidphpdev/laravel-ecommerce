@@ -18,7 +18,7 @@
             </div>
             <div
                 class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900">
-                <x-form action="{{ route('products.update', $product->id) }}" method="PUT">
+                <x-form action="{{ route('products.update', $product->id) }}" method="PUT" :media="true">
                     <div class="space-y-6 p-6 sm:p-8">
                         <div class="flex flex-row gap-5">
                             <!-- Category Name -->
@@ -104,6 +104,49 @@
                                 <p class="mt-1.5 text-xs text-rose-600 dark:text-rose-400">
                                     {{ $message }}
                                 </p>
+                            @enderror
+                        </div>
+                     <!-- Product Images -->
+                        <div>
+                            <label class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                                Product Image <span class="text-red-600 text-xs font-normal">*</span>
+                            </label>
+
+                            <!-- Preview Grid (existing + new images show here) -->
+                            <div id="imagePreview" class="{{ $productImages->isNotEmpty() ? 'flex' : 'hidden' }} flex-wrap gap-3 mb-3">
+
+                                {{-- Existing images from DB --}}
+                                @foreach ($productImages as $image)
+                                    <div class="relative w-24 h-24 rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-sm group flex-shrink-0"
+                                        data-existing-id="{{ $image->id }}">
+                                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Product Image" class="w-full h-full object-cover" />
+                                        {{-- Hidden input so this ID gets submitted with the form --}}
+                                        <input type="hidden" name="existing_images[]" value="{{ $image->id }}" />
+                                        <button type="button"
+                                            class="remove-btn absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer z-10">
+                                            &times;
+                                        </button> 
+                                    </div>
+                                @endforeach
+
+                            </div>
+
+                            <!-- Upload Area -->
+                            <label for="image"
+                                class="flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-black bg-gray-50 px-6 py-12 transition-colors hover:border-gray-400 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800/50 dark:hover:border-gray-500 dark:hover:bg-gray-800">
+                                <svg class="mb-3 h-10 w-10 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <p class="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+                                    <span class="text-blue-600 dark:text-blue-400">Click to upload</span> or drag and drop
+                                </p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG, WEBP up to 5MB — max 8 images</p>
+                                <input type="file" id="image" name="images[]" accept="image/*" class="hidden" multiple />
+                            </label>
+
+                            @error('images')
+                                <p class="mt-1.5 text-xs text-rose-600 dark:text-rose-400">{{ $message }}</p>
                             @enderror
                         </div>
                         {{-- prices section --}}
@@ -296,7 +339,7 @@
                 </a>
                 <button type="submit"
                     class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 dark:bg-blue-500 dark:hover:bg-blue-600">
-                    Update
+                    Save Changes
                 </button>
             </div>
 
@@ -305,5 +348,138 @@
 
     </div>
     </div>
+    @push('script')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
 
+        const input            = document.getElementById('image');
+        const previewContainer = document.getElementById('imagePreview');
+
+        // Track newly added files only
+        let selectedFiles = [];
+
+        // ─── Remove button for EXISTING images (from DB) ─────────────────────────
+        // We use event delegation so it works on dynamically added tiles too
+        previewContainer.addEventListener('click', function (e) {
+            const btn = e.target.closest('.remove-btn');
+            if (!btn) return;
+
+            const box = btn.closest('[data-existing-id]');
+            if (box) {
+                // Remove the hidden input so this ID is NOT sent on submit
+                // meaning the controller will know this image was removed
+                box.remove();
+                updatePreviewVisibility();
+            }
+        });
+
+        // ─── When the user picks NEW files ───────────────────────────────────────
+        input.addEventListener('change', function () {
+
+            const pickedFiles = Array.from(this.files);
+
+            // Count existing visible tiles (DB images not yet removed)
+            const totalCurrent = previewContainer.querySelectorAll('[data-existing-id], [data-new-file]').length;
+
+            pickedFiles.forEach(function (file) {
+
+                // Total tile count check (existing + new combined)
+                const currentTotal = previewContainer.querySelectorAll('[data-existing-id], [data-new-file]').length;
+                if (currentTotal >= 8) {
+                    alert('You can only have up to 8 images total.');
+                    return;
+                }
+
+                // Skip duplicates
+                const alreadyAdded = selectedFiles.some(function (f) {
+                    return f.name === file.name && f.size === file.size;
+                });
+                if (alreadyAdded) return;
+
+                // Skip files bigger than 5 MB
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(file.name + ' is larger than 5MB and was skipped.');
+                    return;
+                }
+
+                selectedFiles.push(file);
+                showNewPreview(file);
+            });
+
+            syncFilesToInput();
+            updatePreviewVisibility();
+        });
+
+        // ─── Show/hide preview container ─────────────────────────────────────────
+        function updatePreviewVisibility() {
+            const hasTiles = previewContainer.querySelectorAll('[data-existing-id], [data-new-file]').length > 0;
+            if (hasTiles) {
+                previewContainer.classList.remove('hidden');
+                previewContainer.classList.add('flex');
+            } else {
+                previewContainer.classList.remove('flex');
+                previewContainer.classList.add('hidden');
+            }
+        }
+
+        // ─── Sync new files array → file input ───────────────────────────────────
+        function syncFilesToInput() {
+            try {
+                const dt = new DataTransfer();
+                selectedFiles.forEach(function (f) { dt.items.add(f); });
+                input.files = dt.files;
+            } catch (e) {
+                console.error('DataTransfer sync failed:', e);
+            }
+        }
+
+        // ─── Build preview tile for a NEW file ───────────────────────────────────
+        function showNewPreview(file) {
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+
+                const box = document.createElement('div');
+                box.className = 'relative w-24 h-24 rounded-xl overflow-hidden border-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 shadow-sm group flex-shrink-0';
+                box.dataset.newFile = file.name; // marks this as a new (not DB) tile
+
+                const img = document.createElement('img');
+                img.src       = event.target.result;
+                img.alt       = file.name;
+                img.className = 'w-full h-full object-cover';
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type      = 'button';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.className = 'remove-btn absolute top-1 right-1 w-5 h-5 rounded-full bg-red-500 hover:bg-red-600 text-white text-xs font-bold flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer z-10';
+
+                removeBtn.addEventListener('click', function () {
+                    selectedFiles = selectedFiles.filter(function (f) {
+                        return !(f.name === file.name && f.size === file.size);
+                    });
+                    box.remove();
+                    syncFilesToInput();
+                    updatePreviewVisibility();
+                });
+
+                box.appendChild(img);
+                box.appendChild(removeBtn);
+                previewContainer.appendChild(box);
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+        // ─── Sync on submit as safety net ────────────────────────────────────────
+        const form = input.closest('form');
+        if (form) {
+            form.addEventListener('submit', function () {
+                syncFilesToInput();
+            });
+        }
+
+    });     
+        </script>
+    @endpush
 </x-admin.app-layout>
