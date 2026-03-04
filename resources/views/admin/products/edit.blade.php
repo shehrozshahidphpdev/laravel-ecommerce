@@ -1,5 +1,5 @@
 <x-admin.app-layout title="admin - create category">
-    <div class="px-4 py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-6 lg:px-4">
         <div class="mx-auto max-w-5xl">
             <!-- Page Header -->
             <div class="mb-6">
@@ -182,6 +182,26 @@
                                 @enderror
                             </div>
                         </div>
+                         {{-- Color Stock Section --}}
+                        <div class="flex flex-wrap gap-5">
+                            @forelse($colors as $color)
+                                <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 bg-gray-800 rounded-md p-4 text-white border border-gray-600">
+                                    <div class="mb-3">
+                                        <label class="flex items-center gap-2">
+                                            <input type="checkbox" name="colors[{{ $color->id }}][id]" value="{{ $color->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <span class="text-sm font-medium">{{ $color->color }}{{ $color->id }}</span>
+                                        </label>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-sm font-medium">Qty:</label>
+                                        <input type="number" name="colors[{{ $color->id }}][qty]" min="0" value="0"
+                                            class="flex-1 rounded-md border border-gray-400 bg-gray-700 px-3 py-2 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50">
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="font-medium text-gray-500 dark:text-gray-400">No colors available</p>
+                            @endforelse
+                        </div>
                         <div class="flex flex-row gap-5">
                             {{-- product tag --}}
                             <div class="w-full">
@@ -196,6 +216,21 @@
                                             {{ $tag->name }}
                                         </option>
                                     @endforeach
+                                </select>
+                                @error('tag_id')
+                                    <p class="mt-1.5 text-xs text-rose-600 dark:text-rose-400">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            {{-- product Deal--}}
+                            <div class="w-full">
+                                <label for="tag" class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                                    On Deal (optional) <span class="text-sm text-gray-500">Default is No</span>
+                                </label>
+                                <select name="deal" id="deal"
+                                    class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20">
+                                    <option value="" selected>--- On Deal ---</option>
+                                    <option value="1" @selected($product->deal_of_the_day == 1)>Yes</option>
+                                    <option value="0"  @selected($product->deal_of_the_day == 0)>No</option>
                                 </select>
                                 @error('tag_id')
                                     <p class="mt-1.5 text-xs text-rose-600 dark:text-rose-400">{{ $message }}</p>

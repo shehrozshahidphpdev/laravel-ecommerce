@@ -1,5 +1,5 @@
 <x-admin.app-layout title="admin - create category">
-  <div class="px-4 py-6 sm:px-6 lg:px-8">
+  <div class="px-4 py-6 sm:px-6 lg:px-4">
     <div class="mx-auto max-w-5xl">
       {{-- FORM HEADER --}}
       <x-admin.form-header title="Create Specifications" text="Add a new Specifications for products"

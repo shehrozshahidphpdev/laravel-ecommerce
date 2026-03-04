@@ -1,5 +1,5 @@
 <x-admin.app-layout title="admin - create brand">
-    <div class="px-4 py-6 sm:px-6 lg:px-8">
+    <div class="px-4 py-6 sm:px-6 lg:px-4">
         <div class="mx-auto max-w-5xl">
             <!-- Page Header -->
             <div class="mb-6">

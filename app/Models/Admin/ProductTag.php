@@ -16,6 +16,11 @@ class ProductTag extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function color()
+    {
+        return $this->belongsTo(Color::class);
+    }
+
     public function name(): Attribute
     {
         return new Attribute(
@@ -27,8 +32,4 @@ class ProductTag extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function color()
-    {
-        return $this->belongsTo(Color::class, 'color_id');
-    }
 }

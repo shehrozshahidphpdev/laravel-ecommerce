@@ -29,6 +29,7 @@ Route::prefix('account/')->name('user.')->group(function () {
             ->name('account.passwordmail');
     });
 
+    # Socialite Routes
     Route::controller(SocialiteController::class)->group(function () {
         Route::get('auth/google', 'googleLogin')
             ->name('auth.google');

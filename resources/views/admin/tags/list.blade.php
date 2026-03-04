@@ -1,5 +1,5 @@
 <x-admin.app-layout title="admin - categories">
-  <div class="px-4 py-6 sm:px-6 lg:px-8">
+  <div class="px-4 py-6 sm:px-6 lg:px-4">
     <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900">
 
       <!-- Header Section -->
@@ -89,7 +89,7 @@
                   {{-- edit btn --}}
                   <a href="{{ route('tags.edit', $tag->id) }}">
                     <span class=" inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold                                                                                                                             
-                                              text-sky-800 dark:bg-sky-500/20 dark:text-sky-400">
+                                                text-sky-800 dark:bg-sky-500/20 dark:text-sky-400">
                       <svg
                         class="cursor-pointer hover:fill-primary-500 dark:hover:fill-primary-500 fill-gray-700 dark:fill-gray-400"
                         width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

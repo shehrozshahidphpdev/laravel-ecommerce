@@ -10,10 +10,13 @@ use App\Models\Admin\Product;
 use App\Models\Admin\ProductImage;
 use App\Models\Admin\ProductTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
+use App\Models\Admin\Color;
+
 
 class ProductController extends Controller
 {
@@ -31,17 +34,39 @@ class ProductController extends Controller
         return view('admin.products.list', compact('products'));
     }
 
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('search');
+
+        $products = Product::with(['category', 'tag', 'brand'])
+            ->where(function ($query) use ($searchTerm) {
+                $query->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('slug', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('description', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('short_description', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('sku', 'LIKE', "%{$searchTerm}%");
+            })
+            ->get();
+
+        return response()->json(['products' => $products]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::select('id', 'name')->get();
         $brands = Brand::all();
+        $colors = Color::select('id', 'color')->get();
+        $tags = ProductTag::select('id', 'name')->get();
 
-        // return $categories;
-        $tags = ProductTag::all();
-        return view('admin.products.create', compact('categories', 'tags', 'brands'));
+        return view('admin.products.create', compact(
+            'categories',
+            'tags',
+            'brands',
+            'colors'
+        ));
     }
 
     /**
@@ -49,10 +74,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->file('images'));
-
+        // dd($request->all());
         $request->validate([
-            'category_id'      => ['required', 'integer'],
+            'category_id'      => ['required'],
             'name'             => ['required', 'string', 'min:3'],
             'slug'             => ['nullable', 'string', 'unique:products,slug'],
             'short_description' => ['required', 'string', 'max:100'],
@@ -65,39 +89,61 @@ class ProductController extends Controller
             'status'           => ['nullable', 'integer'],
             'featured'         => ['nullable', 'integer'],
             'sale'             => ['nullable', 'integer'],
-            'brand_id'         => ['nullable', 'numeric'],
+            'brand_id'         => ['nullable'],
+            'deal'             => ['nullable', 'numeric'],
             'images'           => ['required', 'array', 'min:1', 'max:8'],
             'images.*'         => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:5120'],
         ]);
 
+        $dealExpirationDate = null;
+
+        if (isset($request->deal) && $request->deal == 1) {
+            $dealExpirationDate = Carbon::now()->addHours(24);
+        }
+
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($dealExpirationDate, $request) {
 
                 $product = Product::create([
-                    'category_id'       => $request->category_id,
-                    'name'              => $request->name,
-                    'slug'              => $request->slug ?? Str::slug($request->name),
+                    'category_id' => $request->category_id,
+                    'name' => $request->name,
+                    'slug'      => $request->slug ?? Str::slug($request->name),
                     'short_description' => $request->short_description,
-                    'description'       => $request->description,
-                    'original_price'    => $request->original_price,
+                    'description'   => $request->description,
+                    'original_price'   => $request->original_price,
                     'discounted_price'  => $request->discounted_price,
-                    'tag_id'            => $request->tag_id,
-                    'sku'               => $request->sku,
-                    'quantity'          => $request->quantity,
-                    'brand_id'          => $request->brand_id,
-                    'on_sale'           => $request->sale,
-                    'is_active'         => $request->status,
-                    'is_featured'       => $request->featured,
+                    'tag_id'      => $request->tag_id,
+                    'deal_of_the_day'   => $request->deal,
+                    'deal_expiration_date' => $dealExpirationDate,
+                    'sku'         => $request->sku,
+                    'quantity'     => $request->quantity,
+                    'brand_id'  => $request->brand_id,
+                    'on_sale'  => $request->sale,
+                    'is_active'  => $request->status,
                 ]);
 
                 if ($request->hasFile('images')) {
                     foreach ($request->file('images') as $image) {
                         $imagePath = MyHelper::uploadFile($image);
+
                         ProductImage::create([
                             'product_id' => $product->id,
                             'image_path' => $imagePath,
                         ]);
                     }
+                }
+
+                if ($request->has('colors')) {
+
+                    $attachData = [];
+
+                    foreach ($request->colors as $color) {
+                        if (isset($color['id'], $color['qty']) && $color['qty'] != false) {
+                            $attachData[$color['id']] = ['stock_quantity' => $color['qty']];
+                        }
+                    }
+
+                    $product->colors()->attach($attachData);
                 }
             });
 
@@ -116,7 +162,11 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::with(['category', 'brand', 'tag', 'images'])
+            ->where('id', $id)
+            ->first();
+        // return $product;
+        return view('admin.products.show', compact('product'));
     }
 
     /**
@@ -125,9 +175,9 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
-        $categories = Category::all();
-        $tags = ProductTag::all();
-        $brands = Brand::all();
+        $categories = Category::select('name')->get();
+        $tags = ProductTag::select('name')->get();
+        $brands = Brand::select('name')->get();
         $productImages = ProductImage::where('product_id', $id)->get();
 
         return view('admin.products.edit', compact('product', 'categories', 'tags', 'brands', 'productImages'));
@@ -138,7 +188,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->file('images'));
         $request->validate([
             'category_id' => ['required', 'integer'],
             'name' => ['required', 'string', 'min:3'],
@@ -161,6 +210,13 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
 
+        $dealExpirationDate = null;
+
+
+        if (isset($request->deal) && $request->deal == 1) {
+            $dealExpirationDate = Carbon::now()->addHours(24);
+        }
+
         try {
             $keepIds = $request->input('existing_images', []);
             $toDelete = ProductImage::where('product_id', $id)
@@ -173,16 +229,18 @@ class ProductController extends Controller
                 ProductImage::where('id', $image->id)->delete();
             }
 
-            DB::transaction(function () use ($request, $id, $product) {
+            DB::transaction(function () use ($dealExpirationDate, $request, $id, $product) {
                 $product->update([
                     'category_id' => $request->category_id,
                     'name' => $request->name,
                     'slug' => $request->slug ?? Str::slug($request->name),
                     'short_description' => $request->short_description,
                     'description' => $request->description,
-                    'original_price' => $request->original_price,
-                    'discounted_price' => $request->discounted_price,
+                    'original_price' =>  $request->original_price,
+                    'discounted_price' =>  $request->discounted_price,
                     'tag_id' => $request->tag_id,
+                    'deal_of_the_day' => $request->deal,
+                    'deal_expiration_date' => $dealExpirationDate,
                     'sku' => $request->sku,
                     'quantity' => $request->quantity,
                     'brand_id' => $request->brand_id,

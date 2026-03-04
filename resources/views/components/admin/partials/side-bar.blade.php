@@ -22,7 +22,7 @@
 {{-- @endpush --}}
 
 <!-- Sidebar -->
-<aside :class="sidebarToggle ? 'translate-x-0 lg:w-[90px]' : '-translate-x-full'"
+<aside :class="sidebarToggle ? 'translate-x-0 lg:w-[60  px]' : '-translate-x-full'"
   class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[260px] flex-col overflow-y-hidden border-r border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 px-5 lg:static lg:translate-x-0 transition-all duration-300 ease-in-out">
 
   <!-- SIDEBAR HEADER -->

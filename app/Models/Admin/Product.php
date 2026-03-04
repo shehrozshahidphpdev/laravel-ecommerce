@@ -10,9 +10,25 @@ class Product extends Model
 {
     protected $guarded = [];
 
+    protected $casts = [
+        'deal_expiration_date' => 'datetime',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function colors()
+    {
+        return $this->belongsToMany(Color::class, 'product_color')
+            ->withPivot('stock_quantity')
+            ->withTimestamps();
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 
     public function tag()

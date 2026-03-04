@@ -12,7 +12,6 @@
                     <img src="{{ asset('user/assets/img/logo/logo.svg') }}" alt="logo">
                   </a>
                 </div>
-                <p class="tp-footer-desc">We are a team of designers and developers that create high quality WordPress
                 </p>
                 <div class="tp-footer-social">
                   <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
@@ -118,7 +117,7 @@
           <div class="row align-items-center">
             <div class="col-md-6">
               <div class="tp-footer-copyright">
-                <p>© 2023 All Rights Reserved | HTML Template by <a href="index.html">Themepure</a>.</p>
+                <p>© 2026 All rights reserved</p>
               </div>
             </div>
             <div class="col-md-6">

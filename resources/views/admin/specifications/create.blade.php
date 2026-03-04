@@ -1,5 +1,5 @@
 <x-admin.app-layout title="admin - create category">
-  <div class="px-4 py-6 sm:px-6 lg:px-8">
+  <div class="px-4 py-6 sm:px-6 lg:px-4">
     <div class="mx-auto max-w-5xl">
       {{-- FORM HEADER --}}
       <x-admin.form-header title="Create Specifications" text="Add a new Specifications for products"
@@ -69,26 +69,26 @@
           e.preventDefault();
           $('.element-container').append(
             ` <div class="flex flex-row gap-5 mb-5 label-element">
-                                                                    <input type="text" id="label" name="label[]" placeholder="e.g., Processor, Cpu, Gpu, Ram"
-                                                                      class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20" />
+                                                                      <input type="text" id="label" name="label[]" placeholder="e.g., Processor, Cpu, Gpu, Ram"
+                                                                        class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20" />
 
 
-                                                                    <button type="button" class="
-                                                                    remove-element
-                                                                      inline-flex items-center gap-2
-                                                                      rounded-lg border px-4 py-2.5 text-sm font-medium
-                                                                      shadow-sm transition-colors
+                                                                      <button type="button" class="
+                                                                      remove-element
+                                                                        inline-flex items-center gap-2
+                                                                        rounded-lg border px-4 py-2.5 text-sm font-medium
+                                                                        shadow-sm transition-colors
 
-                                                                      /* Light mode */
-                                                                      bg-white text-gray-700 border-gray-300 hover:bg-gray-100
+                                                                        /* Light mode */
+                                                                        bg-white text-gray-700 border-gray-300 hover:bg-gray-100
 
-                                                                      /* Dark mode */
-                                                                      dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
-                                                                      dark:hover:bg-gray-700
-                                                                    ">
-                                                                      -
-                                                                    </button>
-                                                                  </div>`
+                                                                        /* Dark mode */
+                                                                        dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600
+                                                                        dark:hover:bg-gray-700
+                                                                      ">
+                                                                        -
+                                                                      </button>
+                                                                    </div>`
           );
         });
 
