@@ -174,13 +174,24 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-        $categories = Category::select('name')->get();
-        $tags = ProductTag::select('name')->get();
-        $brands = Brand::select('name')->get();
+        $product = Product::with('colors')->findOrFail($id);
+        // return $product;
+        $categories = Category::all();
+        $tags = ProductTag::select('id', 'name')->get();
+        $brands = Brand::select('id', 'name')->get();
+        $colors = Color::select('id', 'color')->get();
+
         $productImages = ProductImage::where('product_id', $id)->get();
 
-        return view('admin.products.edit', compact('product', 'categories', 'tags', 'brands', 'productImages'));
+        return view('admin.products.edit', compact(
+            'product',
+            'categories',
+            'tags',
+            'brands',
+            'productImages',
+            'colors'
+
+        ));
     }
 
     /**
@@ -196,7 +207,8 @@ class ProductController extends Controller
             'description' => ['required', 'string', 'max:2000'],
             'original_price' => ['required', 'numeric'],
             'discounted_price' => ['nullable', 'numeric'],
-            'tag_id' => ['integer'],
+            'tag_id' => ['nullable'],
+            'deal' => ['nullable'],
             'sku' => ['required', 'min:5', 'string'],
             'quantity' => ['required', 'numeric'],
             'status' => ['integer'],
@@ -257,6 +269,18 @@ class ProductController extends Controller
                             'image_path' => $imagePath
                         ]);
                     }
+                }
+
+                $syncData = [];
+
+                if ($request->has('colors')) {
+                    foreach ($request->colors as $color) {
+                        if (isset($color['id'], $color['qty']) && $color['qty'] != false) {
+                            $syncData[$color['id']] = ['stock_quantity' => $color['qty']];
+                        }
+                    }
+
+                    $product->colors()->sync($syncData);
                 }
             });
 

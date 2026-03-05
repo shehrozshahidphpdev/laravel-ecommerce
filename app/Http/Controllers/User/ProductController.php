@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function quickView()
+    public function quickView(Request $request)
     {
-        return response()->json(['message' => "reached"]);
+        // return response()->json(['message' => "reached"]);
         $id = $request->id;
-        $product = Product::with(['category', 'images'])
+        $product = Product::with(['category', 'images', 'colors', 'brand', 'tag'])
             ->where('id', $id)
-            ->get();
+            ->first();
         return response()->json([
             'product' => $product
         ]);
