@@ -6,16 +6,18 @@ use App\Helpers\MyHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Brand;
 use App\Models\Admin\Category;
+use App\Models\Admin\Color;
 use App\Models\Admin\Product;
 use App\Models\Admin\ProductImage;
+use App\Models\Admin\ProductSpecification;
 use App\Models\Admin\ProductTag;
+use App\Models\Admin\Specification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
-use App\Models\Admin\Color;
 
 
 class ProductController extends Controller
@@ -60,12 +62,14 @@ class ProductController extends Controller
         $brands = Brand::all();
         $colors = Color::select('id', 'color')->get();
         $tags = ProductTag::select('id', 'name')->get();
+        $specifications = Specification::all();
 
         return view('admin.products.create', compact(
             'categories',
             'tags',
             'brands',
-            'colors'
+            'colors',
+            'specifications'
         ));
     }
 
@@ -144,6 +148,19 @@ class ProductController extends Controller
                     }
 
                     $product->colors()->attach($attachData);
+                }
+
+                if ($request->has('labels')) {
+
+                    $attachData = [];
+
+                    foreach ($request->labels as $label) {
+                        if (isset($label['id']) && isset($label['value'])) {
+                            $attachData[$label['id']] = ['value' => $label['value']];
+                        }
+                    }
+
+                    $product->specifications()->attach($attachData);
                 }
             });
 

@@ -10,12 +10,14 @@ class Specification extends Model
 {
     protected $guarded = [];
 
-    protected $table = 'specifications';
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_specification')
+            ->withPivot('value')
+            ->withTimestamps();
+    }
 
-    // public function productSpecifications()
-    // {
-    //     return $this->hasMany(ProductSpecifications::class);
-    // }
+
 
     public function label()
     {

@@ -166,23 +166,56 @@
                         {{-- colors with stock quantity --}}
                         {{-- Color Stock Section --}}
                         <div class="flex flex-wrap gap-5">
+                            <div class="w-full">
+                                <label for="discounted_price"
+                                    class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                                    Colors with Quantity
+                                </label>
+                            </div>
                             @forelse($colors as $color)
-                                <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 bg-gray-800 rounded-md p-4 text-white border border-gray-600">
-                                    <div class="mb-3">
-                                        <label class="flex items-center gap-2">
-                                            <input type="checkbox" name="colors[{{ $color->id }}][id]" value="{{ $color->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <span class="text-sm font-medium">{{ $color->color }}{{ $color->id }}</span>
-                                        </label>
+                                    <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 bg-gray-800 rounded-md p-4 text-white border border-gray-600">
+                                        <div class="mb-3">
+                                            <label class="flex items-center gap-2">
+                                                <input type="checkbox" name="colors[{{ $color->id }}][id]" value="{{ $color->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="text-sm font-medium">{{ $color->color }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-sm font-medium">Qty:</label>
+                                            <input type="number" name="colors[{{ $color->id }}][qty]" min="0" value="0"
+                                                class="flex-1 rounded-md border border-gray-400 bg-gray-700 px-3 py-2 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50">
+                                        </div>
                                     </div>
-                                    <div class="flex items-center gap-2">
-                                        <label class="text-sm font-medium">Qty:</label>
-                                        <input type="number" name="colors[{{ $color->id }}][qty]" min="0" value="0"
-                                            class="flex-1 rounded-md border border-gray-400 bg-gray-700 px-3 py-2 text-sm text-white placeholder-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500/50">
-                                    </div>
-                                </div>
-                            @empty
-                                <p class="font-medium text-gray-500 dark:text-gray-400">No colors available</p>
-                            @endforelse
+                                @empty
+                                    <p class="font-medium text-gray-500 dark:text-gray-400">No colors available</p>
+                                @endforelse
+                        </div>
+
+                        {{-- Product SPecifcations  --}}
+                        <div class="Product specificaiton">
+                            <div class="w-full">
+                                <label for="discounted_price"
+                                    class="mb-2 block text-sm font-semibold text-gray-900 dark:text-white">
+                                    Product Specifications (Optional)
+                                </label>
+                            </div>
+                            <div class="w-full dark:bg-gray-900 rounded-md p-4 text-white border border-gray-600">
+                                @forelse($specifications as $specification)
+                                        <div class="mb-3">
+                                            <label class="flex items-center gap-2">
+                                                <input type="checkbox" name="labels[{{ $specification->id }}][id]" value="{{ $specification->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                                <span class="text-sm font-medium">{{ $specification->label }}</span>
+                                            </label>
+                                        </div>
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <label class="text-sm font-medium">Value:</label>
+                                            <input type="text" name="labels[{{ $specification->id }}][value]" 
+                                                class="block w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:focus:border-blue-400 dark:focus:ring-blue-400/20">
+                                        </div>
+                                @empty
+                                    <p class="font-medium text-gray-500 dark:text-gray-400">No Specificaitons  available</p>
+                                @endforelse
+                            </div>
                         </div>
                         <div class="flex flex-row gap-5">
                             {{-- product tag --}}

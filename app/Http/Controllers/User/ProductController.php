@@ -10,11 +10,12 @@ class ProductController extends Controller
 {
     public function quickView(Request $request)
     {
-        // return response()->json(['message' => "reached"]);
         $id = $request->id;
+
         $product = Product::with(['category', 'images', 'colors', 'brand', 'tag'])
             ->where('id', $id)
             ->first();
+
         return response()->json([
             'product' => $product
         ]);

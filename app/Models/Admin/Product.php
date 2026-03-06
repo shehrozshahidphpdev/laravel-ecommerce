@@ -26,6 +26,13 @@ class Product extends Model
             ->withTimestamps();
     }
 
+    public function specifications()
+    {
+        return $this->belongsToMany(Specification::class, 'product_specification')
+            ->withPivot('value')
+            ->withTimestamps();
+    }
+
     public function images()
     {
         return $this->hasMany(ProductImage::class);

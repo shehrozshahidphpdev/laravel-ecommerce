@@ -12,4 +12,3 @@ Route::resource('products', (ProductController::class));
 
 Route::post('products/search', [ProductController::class, 'search'])->name('products.search');
 
-Route::post('products/fetch', [UserProductController::class, 'quickView'])->name('products.quickview');
