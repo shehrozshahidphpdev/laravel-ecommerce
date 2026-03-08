@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\Category;
 use App\Models\Admin\Product;
 
+use Illuminate\Support\Facades\Session;
+
 use function Symfony\Component\Clock\now;
 
 class HomeController extends Controller
@@ -66,6 +68,9 @@ class HomeController extends Controller
             ->limit(3)
             ->get();
 
+        $cartProducts = Session::get('cart', []);
+
+
         return view('user.index', [
             'categories' => $categories,
             'featuredCategories' => $featuredCategories,
@@ -73,7 +78,8 @@ class HomeController extends Controller
             'newProducts' =>  $newProducts,
             'productsOnDeal' => $productsOnDeal,
             'electronicProducts' => $electronicProducts,
-            'discountedProducts' => $discountedProducts
+            'discountedProducts' => $discountedProducts,
+            'cartProducts' => $cartProducts
         ]);
     }
 }

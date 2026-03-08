@@ -1,5 +1,5 @@
 @props([
-'categories'
+'categories',
 ])
 <!-- header area start -->
 <header>
@@ -193,7 +193,7 @@
                       <path d="M13.5343 10.1018H13.5801" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                         stroke-linejoin="round" />
                     </svg>
-                    <span class="tp-header-action-badge">13</span>
+                    <span class="tp-header-action-badge cart-count-badge">{{ count(session('cart', [])) ?? 0 }}</span>
                   </button>
                 </div>
                 <div class="tp-header-action-item d-lg-none">

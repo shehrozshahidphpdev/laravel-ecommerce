@@ -1,4 +1,4 @@
-<div id="header-sticky-2" class="tp-header-sticky-area">
+{{-- <div id="header-sticky-2" class="tp-header-sticky-area">
     <div class="container">
         <div class="tp-mega-menu-wrapper p-relative">
             <div class="row align-items-center">
@@ -295,4 +295,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}

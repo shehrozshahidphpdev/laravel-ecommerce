@@ -1,5 +1,5 @@
 @props([
-  'categories'
+  'categories',
 ])
 <x-user.app-layout title="Home Page" :categories="$categories">
   <!-- slider area start -->
@@ -1548,7 +1548,7 @@
   @push('script')
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const token = document.head.querySelector('meta[name="csrf-token"]').content;
+        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
         let quickViewBtn = document.querySelectorAll('.tp-product-quick-view-btn');
         const modalBody = document.querySelector('.tp-product-modal-content');
 
@@ -1560,7 +1560,7 @@
           fetch("{{ route('products.quickview') }}", {
               method: 'POST',
               headers: {
-                'X-CSRF-TOKEN': token,
+                'X-CSRF-TOKEN': csrfToken,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
               },
@@ -1779,24 +1779,18 @@
           .catch(console.error);
           })
         })
-
-        const cartBtns = document.querySelectorAll('.tp-product-add-cart-btn');
-        cartBtns.forEach((btn) => {
-          btn.addEventListener('click', function() {
-          let cartProductId = this.dataset.id;
-
-            fetch("{{ route('products.quickview') }}", {
-              method: 'POST',
-              headers: {
-                'X-CSRF-TOKEN': token,
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-              },
-              body: JSON.stringify({ id: cartProductId })
-            })
-          })
-        })
       }) 
     </script>
   @endpush
+  <script>
+    const cartRoute = "{{ route('products.cart') }}";
+    const deleteCartRoute =  "{{ route('products.cart.delete') }}"
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+  </script>
+  @push('script')
+  <script src="{{ asset('assets/js/discount-timer.js') }}"> </script>
+  <script src="{{ asset('assets/js/cart.js') }}">
+  </script>
+
+    @endpush
 </x-user.app-layout>
