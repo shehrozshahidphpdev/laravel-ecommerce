@@ -14,7 +14,16 @@ Route::post('products/fetch', [ProductController::class, 'quickView'])
   ->name('products.quickview');
 
 Route::post('proucts/cart', [CartController::class, 'addToCart'])
-  ->name('products.cart');
+  ->name('products.mini-cart');
 
 Route::delete('proucts/cart/', [CartController::class, 'deleteFromCart'])
   ->name('products.cart.delete');
+
+Route::get('product/{slug}', [ProductController::class, 'show'])
+  ->name('products.show');
+
+Route::get('cart', [CartController::class, 'index'])
+  ->name('products.cart');
+
+Route::post('cart/update', [CartController::class, 'update'])
+  ->name('cart.update');

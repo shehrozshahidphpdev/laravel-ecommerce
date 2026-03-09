@@ -20,4 +20,24 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function show(string $slug)
+    {
+        $product = Product::with(['category', 'images', 'colors', 'tag', 'specifications'])
+            ->where('slug', $slug)
+            ->first();
+        // return $product;
+
+        return view('user.show', compact('product'));
+
+
+        // $breadCrumbs = [];
+
+        // $breadcrumbs = [
+        //     [
+        //         'title' => ""
+        //     ]
+        // ]
+        dd($slug);
+    }
 }

@@ -1,5 +1,4 @@
 {{-- @dd(session('cart')); --}}
-{{-- {{ session()->forget('cart') }} --}}
 {{-- <!-- cart mini area start --> --}}
 <div class="cartmini__area tp-all-font-roboto">
   <div class="cartmini__wrapper d-flex justify-content-between flex-column">
@@ -19,7 +18,8 @@
         @if(session('cart') && count(session('cart')) > 0)
           @foreach(session('cart') as $item)
             @php
-              $subtotal += $item['discountedPrice'] ? $item['discountedPrice'] * $item['qty'] : $item['originalPrice'] * $item['qty'];
+              $price = $item['discountedPrice'] ?? $item['originalPrice'];
+              $subtotal += $price * $item['qty'];
             @endphp
 
             <div class="cartmini__widget-item">
@@ -39,7 +39,7 @@
                   <span class="cartmini__quantity">x{{ $item['qty'] }}</span>
                 </div>
               </div>
-              <button type="button" class="cartmini__del" data-id="{{ $item['productId'] }}">
+              <button type="button" class="cartmini__del delete__cart__product" data-id="{{ $item['productId'] }}">
                 <i class="fa-regular fa-xmark"></i>
               </button>
             </div>
@@ -62,7 +62,7 @@
         <span class="cart-mini-subtotal">$ {{ $subtotal ?? 0 }}</span>
       </div>
       <div class="cartmini__checkout-btn">
-        <a href="cart.html" class="tp-btn mb-10 w-100"> view cart</a>
+        <a href="{{ route('products.cart') }}" class="tp-btn mb-10 w-100"> view cart</a>
         <a href="checkout.html" class="tp-btn tp-btn-border w-100"> checkout</a>
       </div>
     </div>

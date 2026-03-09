@@ -67,6 +67,13 @@
     {{-- intel tel input cdn script link --}}
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
 
+    {{-- cart routes --}}
+    <script>
+        const cartRoute = "{{ route('products.mini-cart') }}";
+        const deleteCartRoute = "{{ route('products.cart.delete') }}";
+
+    </script>
+    <script src="{{ asset('assets/js/discount-timer.js') }}"> </script>
     @stack('script')
 </body>
 

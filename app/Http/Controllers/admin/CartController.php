@@ -10,30 +10,40 @@ use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
+
+    public function index()
+    {
+        // Session::forget('cart');
+        $cartProducts = Session::get('cart', []);
+        return view('user.cart', compact('cartProducts'));
+    }
     public function addToCart(Request $request)
     {
         $product = Product::findOrFail($request->id);
 
         $productImage = ProductImage::where('product_id', $request->id)->first();
 
+        if ($request->has('quantity')) {
+            $productQty = $request->quantity;
+        }
+
         $cart = Session::get('cart', []);
 
-        if (!empty($cart)) {
+        foreach ($cart as $key => $cartItem) {
 
-            foreach ($cart as $key => $cartItem) {
+            if ($cartItem['productId'] == $request->id) {
 
-                if ($cartItem['productId'] == $request->id) {
+                $qty = $request->has('quantity') ? $productQty : 1;
 
-                    $cart[$key]['qty']++;
+                $cart[$key]['qty'] += $qty;
 
-                    Session::put('cart', $cart);
+                Session::put('cart', $cart);
 
-                    return response()->json([
-                        'status' => true,
-                        'message' => "Product quantity increased successfully",
-                        'cartItems' => $cart
-                    ], 200);
-                }
+                return response()->json([
+                    'status' => true,
+                    'message' => "Product quantity increased successfully",
+                    'cartItems' => $cart
+                ], 200);
             }
         }
 
@@ -42,8 +52,8 @@ class CartController extends Controller
             'productName' => $product->name,
             'productImage' => $productImage->image_path ?? null,
             'originalPrice' => $product->original_price,
-            'discountedPrice' => $product->discounted_price,
-            'qty' => 1
+            'discountedPrice' => $product->discounted_price ?? null,
+            'qty' => $productQty ?? 1
         ];
 
         Session::put('cart', $cart);
@@ -80,5 +90,24 @@ class CartController extends Controller
                 'removedProductId' => $request->id,
             ], 500);
         }
+    }
+
+    public function update(Request $request)
+    {
+        $cart = Session::get('cart');
+
+        foreach ($cart as $key => $cartItem) {
+            foreach ($request->items as $item) {
+                if ($item['id'] == $key) {
+                    $cart[$key]['qty'] = $item['qty'];
+                    Session::put('cart', $cart);
+                }
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => "Cart has been updated",
+        ], 201);
     }
 }

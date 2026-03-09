@@ -24,7 +24,7 @@ class HomeController extends Controller
             ->limit(5)
             ->get();
 
-        $featuredProducts = Product::select('id', 'name', 'tag_id',  'category_id',  'slug', 'original_price', 'discounted_price')
+        $featuredProducts = Product::select('id', 'slug', 'name', 'tag_id',  'category_id',  'slug', 'original_price', 'discounted_price')
             ->with(['category:id,name', 'images:id,product_id,image_path', 'tag' => function ($query) {
                 $query->with('color');
             }])
@@ -32,7 +32,7 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        $newProducts = Product::select('id', 'name', 'tag_id', 'category_id',  'slug', 'original_price', 'discounted_price')
+        $newProducts = Product::select('id', 'name', 'slug', 'tag_id', 'category_id',  'slug', 'original_price', 'discounted_price')
             ->with(['category:id,name', 'images:id,product_id,image_path', 'tag' => function ($query) {
                 $query->with('color');
             }])
@@ -41,7 +41,7 @@ class HomeController extends Controller
             ->get();
 
 
-        $productsOnDeal = Product::select('id', 'name', 'discounted_price', 'original_price')
+        $productsOnDeal = Product::select('id', 'slug', 'name', 'discounted_price', 'original_price')
             ->with(['images:id,product_id,image_path', 'category:id,name'])
             ->where('deal_of_the_day',  '1')
             ->where('deal_expiration_date',  '>',  now())
@@ -53,7 +53,7 @@ class HomeController extends Controller
 
         $categoryIds = $category->getAllChildrenIds();
 
-        $electronicProducts = Product::select('id', 'tag_id',  'category_id',  'name', 'original_price', 'discounted_price')
+        $electronicProducts = Product::select('id', 'tag_id', 'slug',   'category_id',  'name', 'original_price', 'discounted_price')
             ->with(['category:id,name', 'images:id,product_id,image_path', 'tag' => function ($query) {
                 $query->with('color');
             }])
@@ -62,7 +62,7 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        $discountedProducts = Product::select('id', 'name',   'category_id',  'slug', 'original_price', 'discounted_price')
+        $discountedProducts = Product::select('id', 'slug', 'name',   'category_id',  'slug', 'original_price', 'discounted_price')
             ->with(['category:id,name', 'images:id,product_id,image_path'])
             ->whereNotNull('discounted_price')
             ->limit(3)
