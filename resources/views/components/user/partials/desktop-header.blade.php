@@ -154,7 +154,7 @@
             <ul>
                 @foreach ($categories as $category)
                     <li class="mb-2 {{ $category->children->isNotEmpty() ? 'has-dropdown' : '' }}">
-                        <a href="#" class="d-flex align-items-center text-decoration-none">
+                        <a href="{{ route('collecitons', $category->slug) }}" class="d-flex align-items-center text-decoration-none">
                             @if($category->category_icon)
                                 <img src="{{ asset('storage/' . $category->category_icon) }}" 
                                     alt="category icon" 
@@ -174,7 +174,7 @@
                                 <ul class="mega-menu tp-submenu">
                                   @foreach ($validChildrens as $child)
                                     <li>
-                                      <a href="#" class="mega-menu-title">
+                                      <a href="{{ route('collecitons', $child->slug) }}" class="mega-menu-title">
                                         {{ $child->name }}
                                       </a>
                                         <ul>
@@ -190,7 +190,7 @@
                                                 @if($child->tags)
                                                     @foreach($child->tags as $tag)
                                                         <li>
-                                                            <a href="{#">
+                                                            <a href="#">
                                                                 {{ $tag }}
                                                             </a>
                                                         </li>
@@ -206,7 +206,7 @@
                                 <ul class="tp-submenu">
                                     @foreach ($category->children as $child)
                                         <li class="{{ $child->children->isNotEmpty() ? 'has-dropdown' : '' }}">
-                                            <a href="#">
+                                            <a href="{{ route('collecitons', $child->slug) }}">
                                                 {{ $child->name }}
                                             </a>
                                             
@@ -215,7 +215,7 @@
                                                 <ul class="tp-submenu">
                                                     @foreach ($child->children as $subChild)  
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="{{ route('collecitons', $subChild->slug )}}">
                                                                 {{ $subChild->name }}
                                                             </a>
                                                         </li>

@@ -121,19 +121,19 @@
                           <span class="tp-cart-checkout-top-price">${{ $subTotal }}</span>
                       </div>
                       <div class="tp-cart-checkout-shipping">
-                          <h4 class="tp-cart-checkout-shipping-title">Shipping</h4>
+                          {{-- <h4 class="tp-cart-checkout-shipping-title">Shipping</h4> --}}
 
                           <div class="tp-cart-checkout-shipping-option-wrapper">
-                            <div class="tp-cart-checkout-shipping-option">
+                            {{-- <div class="tp-cart-checkout-shipping-option">
                                 <input id="flat_rate" type="radio" name="shipping">
                                 <label for="flat_rate">Flat rate: <span>$20.00</span></label>
                             </div>
                             <div class="tp-cart-checkout-shipping-option">
                                 <input id="local_pickup" type="radio" name="shipping">
                                 <label for="local_pickup">Local pickup: <span> $25.00</span></label>
-                            </div>
+                            </div> --}}
                             <div class="tp-cart-checkout-shipping-option">
-                                <input id="free_shipping" type="radio" name="shipping">
+                                {{-- <input id="free_shipping" type="radio" name="shipping"> --}}
                                 <label for="free_shipping">Free shipping on orders above $100</label>
                             </div>
                           </div>

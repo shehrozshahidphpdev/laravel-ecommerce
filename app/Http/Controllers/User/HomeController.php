@@ -82,4 +82,8 @@ class HomeController extends Controller
             'cartProducts' => $cartProducts
         ]);
     }
+
+    public function page(string $slug) {
+        
+    }
 }

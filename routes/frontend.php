@@ -27,3 +27,6 @@ Route::get('cart', [CartController::class, 'index'])
 
 Route::post('cart/update', [CartController::class, 'update'])
   ->name('cart.update');
+
+Route::get('collections/{slug}', [HomeController::class, 'page'])
+  ->name('collecitons');
