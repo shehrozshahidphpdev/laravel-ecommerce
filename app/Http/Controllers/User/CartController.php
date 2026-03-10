@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Product;
@@ -62,6 +62,46 @@ class CartController extends Controller
             'status' => true,
             'message' => "Product added to cart",
             'cartItems' => $cart
+        ], 200);
+    }
+
+    public function storeWishListItemToCart(Request $request)
+    {
+        $productId = $request->id;
+        $productQty = $request->qty;
+
+        $cart = Session::get('cart', []);
+
+        // increase quantity if the product is already in the cart 
+        foreach ($cart as $key => $cartItem) {
+            if ($key == $productId) {
+                $cart[$key]['qty'] += ($productQty == 1 ? 1 : $productQty);
+                Session::put('cart', $cart);
+
+                return response()->json([
+                    'status' => true,
+                    'message' => "Cart updated successfully",
+                ], 200);
+            }
+        }
+
+        $product = Product::findOrFail($productId);
+        $productImage = ProductImage::where('product_id', $product->id)->first();
+
+        $cart[$productId] = [
+            'productId' => $productId,
+            'productName' => $product->name,
+            'productImage' => $productImage->image_path ?? null,
+            'originalPrice' => $product->original_price ?? null,
+            'discountedPrice' => $product->discounted_price ?? null,
+            'qty' => $productQty ?? 1
+        ];
+
+        Session::put('cart', $cart);
+
+        return response()->json([
+            'status' => true,
+            'message' => "Cart updated suuccessfully",
         ], 200);
     }
 

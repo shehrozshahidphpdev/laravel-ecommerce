@@ -99,4 +99,17 @@ class Category extends Model
 
         return $ids;
     }
+
+    public function getFullSlugAttribute()
+    {
+        $slugs = [$this->slug];
+        $parent = $this->parent;
+
+        while ($parent) {
+            $slugs = array_unshift($slug, $parent);
+            $parent = $parent->parent;
+        }
+
+        return implode('/', $slugs);
+    }
 }

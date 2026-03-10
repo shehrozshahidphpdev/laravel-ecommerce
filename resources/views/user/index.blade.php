@@ -368,7 +368,7 @@
                      <div class="col-xl-3 col-lg-3 col-sm-6">
                         <div class="tp-product-item transition-3 mb-25">
                           <div class="tp-product-thumb p-relative fix m-img">
-                            <a href="{{ route('products.show', $product->slug) }}">
+                            <a href="{{ route('products.show', $product->full_slug) }}">
                               @foreach ($product->images as $image)
                                 <img src="{{ asset('storage/' . $image->image_path) }}" alt=" product-electronic">
                                 @php
@@ -434,7 +434,7 @@
 
                                   <span class="tp-product-tooltip">Quick View</span>
                                 </button>
-                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                                   <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -559,7 +559,7 @@
 
                                   <span class="tp-product-tooltip">Quick View</span>
                                 </button>
-                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                                   <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -684,7 +684,7 @@
 
                                   <span class="tp-product-tooltip">Quick View</span>
                                 </button>
-                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                                <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                                   <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -828,7 +828,7 @@
 
                                 <span class="tp-product-tooltip">Quick View</span>
                               </button>
-                              <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                              <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                                 <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
                                   xmlns="http://www.w3.org/2000/svg">
                                   <path fill-rule="evenodd" clip-rule="evenodd"
@@ -1049,7 +1049,7 @@
 
                         <span class="tp-product-tooltip">Quick View</span>
                       </button>
-                      <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                      <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                         <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M1.78158 8.88867C3.15121 13.1386 8.5623 16.5749 10.0003 17.4255C11.4432 16.5662 16.8934 13.0918 18.219 8.89257C19.0894 6.17816 18.2815 2.73984 15.0714 1.70806C13.5162 1.21019 11.7021 1.5132 10.4497 2.4797C10.1879 2.68041 9.82446 2.68431 9.56069 2.48555C8.23405 1.49079 6.50102 1.19947 4.92136 1.70806C1.71613 2.73887 0.911158 6.17718 1.78158 8.88867ZM10.0013 19C9.88015 19 9.75999 18.9708 9.65058 18.9113C9.34481 18.7447 2.14207 14.7852 0.386569 9.33491C0.385592 9.33491 0.385592 9.33394 0.385592 9.33394C-0.71636 5.90244 0.510636 1.59018 4.47199 0.316764C6.33203 -0.283407 8.35911 -0.019371 9.99836 1.01242C11.5868 0.0108324 13.6969 -0.26587 15.5198 0.316764C19.4851 1.59213 20.716 5.90342 19.615 9.33394C17.9162 14.7218 10.6607 18.7408 10.353 18.9094C10.2436 18.9698 10.1224 19 10.0013 19Z"
@@ -1209,7 +1209,7 @@
 
                             <span class="tp-product-tooltip">Quick View</span>
                           </button>
-                          <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn">
+                          <button type="button" class="tp-product-action-btn tp-product-add-to-wishlist-btn" data-id="{{ $product->id }}">
                             <svg width="20" height="19" viewBox="0 0 20 19" fill="none"
                               xmlns="http://www.w3.org/2000/svg">
                               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -1785,5 +1785,4 @@
   <script>
     const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
   </script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
 </x-user.app-layout>

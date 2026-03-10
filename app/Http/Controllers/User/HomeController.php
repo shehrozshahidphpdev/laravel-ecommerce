@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Category;
 use App\Models\Admin\Product;
-
+use App\Models\User\Wishlist;
 use Illuminate\Support\Facades\Session;
 
 use function Symfony\Component\Clock\now;
@@ -32,13 +32,14 @@ class HomeController extends Controller
             ->limit(8)
             ->get();
 
-        $newProducts = Product::select('id', 'name', 'slug', 'tag_id', 'category_id',  'slug', 'original_price', 'discounted_price')
-            ->with(['category:id,name', 'images:id,product_id,image_path', 'tag' => function ($query) {
+        $newProducts = Product::select('id', 'name', 'tag_id', 'category_id',  'slug', 'original_price', 'discounted_price')
+            ->with(['category:id,name,slug,parent_id', 'category.parent:id,name,slug,parent_id', 'category.parent.parent:id,name,slug,parent_id', 'images:id,product_id,image_path', 'tag' => function ($query) {
                 $query->with('color');
             }])
             ->orderByDesc('created_at')
             ->limit(8)
             ->get();
+        // return $newProducts;
 
 
         $productsOnDeal = Product::select('id', 'slug', 'name', 'discounted_price', 'original_price')
@@ -71,6 +72,7 @@ class HomeController extends Controller
         $cartProducts = Session::get('cart', []);
 
 
+
         return view('user.index', [
             'categories' => $categories,
             'featuredCategories' => $featuredCategories,
@@ -79,11 +81,9 @@ class HomeController extends Controller
             'productsOnDeal' => $productsOnDeal,
             'electronicProducts' => $electronicProducts,
             'discountedProducts' => $discountedProducts,
-            'cartProducts' => $cartProducts
+            'cartProducts' => $cartProducts,
         ]);
     }
 
-    public function page(string $slug) {
-        
-    }
+    public function page(string $slug) {}
 }

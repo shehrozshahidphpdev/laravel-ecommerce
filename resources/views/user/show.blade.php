@@ -1,8 +1,8 @@
 @props([
-  'categories',
+   'categories',
 ])
 <x-user.app-layout title="Home Page" :categories="$categories">
-    <main>
+    <main class="single-product-show-page">
 
          <!-- breadcrumb area start -->
          <section class="breadcrumb__area breadcrumb__style-2 include-bg pt-50 pb-20">

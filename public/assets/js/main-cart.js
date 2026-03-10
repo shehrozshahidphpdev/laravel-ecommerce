@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   increaseBtn.forEach((item) => {
     item.addEventListener("click", function () {
+      console.log("from main cart");
+
       const container = item.closest(".tp-product-quantity");
       const input = container.querySelector(".tp-cart-input");
       input.value = parseInt(input.value) + 1;

@@ -71,9 +71,13 @@
     <script>
         const cartRoute = "{{ route('products.mini-cart') }}";
         const deleteCartRoute = "{{ route('products.cart.delete') }}";
+        const addWishlistRoute = "{{ route('wishlist.store') }}"
 
     </script>
     <script src="{{ asset('assets/js/discount-timer.js') }}"> </script>
+    <script src="{{ asset('assets/js/wishlist.js') }}"></script>
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
+
     @stack('script')
 </body>
 

@@ -50,6 +50,20 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function getFullSlugAttribute()
+    {
+        $slugs = [$this->slug];
+
+        $category = $this->category;
+
+        while ($category) {
+            array_unshift($slugs, $category->slug);
+            $category = $category->parent;
+        }
+
+        return implode('/', $slugs);
+    }
+
     protected function slug()
     {
         return Attribute::make(

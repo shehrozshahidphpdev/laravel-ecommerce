@@ -1989,7 +1989,4 @@
       <script>
         const cartRoute = "{{ route('products.mini-cart') }}"
       </script>
-      @push('script')
-        <script src="{{ asset('assets/js/cart.js') }}"></script>
-      @endpush
 </x-user.app-layout>

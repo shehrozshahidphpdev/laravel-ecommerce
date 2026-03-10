@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ProductController;
+use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -20,6 +22,7 @@ Route::delete('proucts/cart/', [CartController::class, 'deleteFromCart'])
   ->name('products.cart.delete');
 
 Route::get('product/{slug}', [ProductController::class, 'show'])
+  ->where('slug', '.*')
   ->name('products.show');
 
 Route::get('cart', [CartController::class, 'index'])
@@ -30,3 +33,16 @@ Route::post('cart/update', [CartController::class, 'update'])
 
 Route::get('collections/{slug}', [HomeController::class, 'page'])
   ->name('collecitons');
+
+Route::get('wishlist', [WishlistController::class, 'index'])
+  ->name('wishlist');
+
+Route::post('wishlist/store', [WishlistController::class, 'store'])
+  ->name('wishlist.store');
+
+Route::delete('wishlist/{id}', [WishlistController::class, 'destroy'])
+  ->name('wishlist.destroy');
+
+
+Route::post('', [CartController::class, 'storeWishListItemToCart'])
+  ->name('wishlist.cart');

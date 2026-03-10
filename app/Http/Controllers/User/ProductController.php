@@ -23,10 +23,13 @@ class ProductController extends Controller
 
     public function show(string $slug)
     {
+        $slugs = explode('/', $slug);
+
+        $slug = end($slugs);
+
         $product = Product::with(['category', 'images', 'colors', 'tag', 'specifications'])
             ->where('slug', $slug)
             ->first();
-        // return $product;
 
         return view('user.show', compact('product'));
 
@@ -38,6 +41,5 @@ class ProductController extends Controller
         //         'title' => ""
         //     ]
         // ]
-        dd($slug);
     }
 }

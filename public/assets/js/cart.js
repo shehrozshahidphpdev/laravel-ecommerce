@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", function (e) {
       if (!e.target.closest(".cartmini__del")) return;
       const btn = e.target.closest(".cartmini__del");
+      console.log(btn);
 
       const productId = btn.dataset.id;
 
@@ -162,6 +163,10 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(console.error);
     });
+
+  const singleProductPage = document.querySelector(".single-product-show-page");
+
+  if (!singleProductPage) return;
 
   const increaseBtn = document.querySelector(".tp-cart-plus");
   const decreaseBtn = document.querySelector(".tp-cart-minus");
