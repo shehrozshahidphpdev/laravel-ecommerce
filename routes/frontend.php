@@ -7,13 +7,10 @@ use App\Http\Controllers\User\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 
-
-
-
 Route::get('/', [HomeController::class, 'index'])->name(name: 'user.home');
 
 Route::post('products/fetch', [ProductController::class, 'quickView'])
-  ->name('products.quickview');
+  ->name('product.quickview');
 
 Route::post('proucts/cart', [CartController::class, 'addToCart'])
   ->name('products.mini-cart');
@@ -24,6 +21,10 @@ Route::delete('proucts/cart/', [CartController::class, 'deleteFromCart'])
 Route::get('product/{slug}', [ProductController::class, 'show'])
   ->where('slug', '.*')
   ->name('products.show');
+
+Route::get('collections/{full_slug}', [ProductController::class, 'collections'])
+  ->where('full_slug', '.*')
+  ->name('products.collections');
 
 Route::get('cart', [CartController::class, 'index'])
   ->name('products.cart');

@@ -100,13 +100,30 @@ class Category extends Model
         return $ids;
     }
 
+    /**
+     * Build a slash-delimited slug path for a category, including all
+     * ancestors. This is used for frontend URLs that map to the
+     * "collections" catch‑all route.
+     *
+     * Previously we were unshifting the entire parent model into the
+     * array, which meant that when PHP converted the array to a string it
+     * invoked the model's __toString (JSON of the attributes).  The
+     * route helper then received an object/array instead of a plain slug
+     * string, which produced a UrlGenerationException complaining about
+     * missing parameters (it was trying to treat the model's attributes as
+     * named parameters).
+     *
+     * Fixing this by only ever dealing with the slug property keeps the
+     * return value a clean string and prevents the exception.
+     */
     public function getFullSlugAttribute()
     {
         $slugs = [$this->slug];
+
         $parent = $this->parent;
 
         while ($parent) {
-            $slugs = array_unshift($slug, $parent);
+            array_unshift($slugs, $parent->slug);
             $parent = $parent->parent;
         }
 

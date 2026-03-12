@@ -7,6 +7,7 @@ use App\Http\Middleware\CustomerRedirectIfAuthenticated;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use SebastianBergmann\CodeCoverage\StaticAnalysisCacheNotConfiguredException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -23,6 +24,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'auth' => Authenticate::class
         ]);
     })
+
     ->withExceptions(using: function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (ThrottleRequestsException $e, $request) {
+            return back()->withErrors([
+                'email' => 'Too many attempts. Please try again later.'
+            ])->withInput();
+        });
     })->create();

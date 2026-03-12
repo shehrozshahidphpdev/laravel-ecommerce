@@ -17,7 +17,8 @@ Route::prefix('account/')->name('user.')->group(function () {
             ->name('account.login');
 
         Route::post('register',  'registerUser')
-            ->name('account.register.store');
+            ->name('account.register.store')
+            ->middleware('throttle:registerUser');
 
         Route::post('login',  'attemptLogin')
             ->name('account.attempt-login');

@@ -7,14 +7,12 @@ use App\Helpers\MyHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User\Customer;
 use App\Models\User\CustomerAddresses;
-use function Pest\Laravel\session;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
-use Illuminate\Mail\Mailable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
@@ -23,7 +21,6 @@ class AccountController extends Controller
 {
     public function login()
     {
-        // return auth()->guard('customer')->user();
         return view('user.accounts.login');
     }
 
@@ -67,8 +64,13 @@ class AccountController extends Controller
             Log::info('User Created Successfully!');
             return to_route('user.account.login')
                 ->with('success', 'User Registered Successfully');
-        } catch (\Exception $e) {
-            Log::error('User Registration Failed' . $e->getMessage());
+        } catch (ThrottleRequestsException | \Exception $e) {
+
+            Log::error('User Registration Failed: ' . $e->getMessage());
+
+            return back()->withErrors([
+                'email' => "Too many attempts, try again later"
+            ])->withInput();
         }
     }
 

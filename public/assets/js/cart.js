@@ -13,7 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
       fetch(cartRoute, {
         method: "POST",
         headers: {
-          "X-CSRF-TOKEN": csrfToken,
+          "X-CSRF-TOKEN": document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
           "Content-Type": "application/json",
           Accept: "application/json",
         },

@@ -67,17 +67,20 @@
     {{-- intel tel input cdn script link --}}
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
 
-    {{-- cart routes --}}
     <script>
-        const cartRoute = "{{ route('products.mini-cart') }}";
-        const deleteCartRoute = "{{ route('products.cart.delete') }}";
-        const addWishlistRoute = "{{ route('wishlist.store') }}"
-
+        // expose these values on the window so any script file can use them
+        window.cartRoute = "{{ route('products.mini-cart') }}";
+        window.deleteCartRoute = "{{ route('products.cart.delete') }}";
+        window.addWishListRoute = "{{ route('wishlist.store') }}";
+        window.quickViewUrl = "{{ route('product.quickview') }}";
+        window.baseStorageUrl = "{{ asset('storage') }}/";
+        // temporary debug log left during development
+        console.log("routing globals injected");
     </script>
-    <script src="{{ asset('assets/js/discount-timer.js') }}"> </script>
+    <script src="{{ asset('assets/js/quick-view.js') }}"></script>
+    <script src="{{ asset('assets/js/discount-timer.js') }}"></script>
     <script src="{{ asset('assets/js/wishlist.js') }}"></script>
     <script src="{{ asset('assets/js/cart.js') }}"></script>
-
     @stack('script')
 </body>
 

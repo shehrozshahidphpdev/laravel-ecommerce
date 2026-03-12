@@ -8,7 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
     item.addEventListener("click", function () {
       const productId = this.dataset.id;
       console.log(productId);
-      fetch(addWishlistRoute, {
+
+      fetch(addWishListRoute, {
         method: "post",
         headers: {
           "X-CSRF-TOKEN": document
@@ -21,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           if (data.status === false) {
             toast.success("success", data.message);
           }
@@ -33,5 +35,4 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(console.error);
     });
   });
-
 });

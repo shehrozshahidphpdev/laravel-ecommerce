@@ -1,8 +1,8 @@
 @props([
-'categories',
+    'categories',
+    'wishlistCount' => 0,
 ])
 
-{{-- @dd($wishlistCount) --}}
 <!-- header area start -->
 <header>
   <div class="tp-header-area p-relative z-index-11">
@@ -24,15 +24,6 @@
                 <div class="tp-header-search-wrapper d-flex align-items-center">
                   <div class="tp-header-search-box">
                     <input type="text" placeholder="Search for Products...">
-                  </div>
-                  <div class="tp-header-search-category">
-                    <select>
-                      <option>Select Category</option>
-                      <option>Mobile</option>
-                      <option>Digital Watch</option>
-                      <option>Computer</option>
-                      <option>Watch</option>
-                    </select>
                   </div>
                   <div class="tp-header-search-btn">
                     <button type="submit">
@@ -75,20 +66,6 @@
                 </a>
               </div>
               <div class="tp-header-action d-flex align-items-center ml-50">
-                <div class="tp-header-action-item d-none d-lg-block">
-                  <a href="compare.html" class="tp-header-action-btn">
-                    <svg width="20" height="19" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M14.8396 17.3319V3.71411" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M19.1556 13L15.0778 17.0967L11 13" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                      <path d="M4.91115 1.00056V14.6183" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                      <path d="M0.833496 5.09667L4.91127 1L8.98905 5.09667" stroke="currentColor" stroke-width="1.5"
-                        stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                  </a>
-                </div>
                 <div class="tp-header-action-item d-none d-lg-block">
                   <a href="{{ route('wishlist') }}"  class="tp-header-action-btn header-wishlist-btn">
                     <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,7 +133,7 @@
             <ul>
                 @foreach ($categories as $category)
                     <li class="mb-2 {{ $category->children->isNotEmpty() ? 'has-dropdown' : '' }}">
-                        <a href="{{ route('collecitons', $category->slug) }}" class="d-flex align-items-center text-decoration-none">
+                        <a href="{{ route('products.collections', $category->full_slug) }}" class="d-flex align-items-center text-decoration-none">
                             @if($category->category_icon)
                                 <img src="{{ asset('storage/' . $category->category_icon) }}" 
                                     alt="category icon" 
@@ -176,7 +153,7 @@
                                 <ul class="mega-menu tp-submenu">
                                   @foreach ($validChildrens as $child)
                                     <li>
-                                      <a href="{{ route('collecitons', $child->slug) }}" class="mega-menu-title">
+                                      <a href="{{ route('products.collections', $child->full_slug) }}" class="mega-menu-title">
                                         {{ $child->name }}
                                       </a>
                                         <ul>
@@ -208,7 +185,7 @@
                                 <ul class="tp-submenu">
                                     @foreach ($category->children as $child)
                                         <li class="{{ $child->children->isNotEmpty() ? 'has-dropdown' : '' }}">
-                                            <a href="{{ route('collecitons', $child->slug) }}">
+                                            <a href="{{ route('products.collections', $child->full_slug) }}">
                                                 {{ $child->name }}
                                             </a>
                                             
@@ -217,7 +194,7 @@
                                                 <ul class="tp-submenu">
                                                     @foreach ($child->children as $subChild)  
                                                         <li>
-                                                            <a href="{{ route('collecitons', $subChild->slug )}}">
+                                                            <a href="{{ route('products.collections', $subChild->full_slug )}}">
                                                                 {{ $subChild->name }}
                                                             </a>
                                                         </li>

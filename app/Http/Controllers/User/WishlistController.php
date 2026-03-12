@@ -16,7 +16,7 @@ class WishlistController extends Controller
         $wishlists = Wishlist::with(['product.images'])
             ->where('customer_id', Auth::guard('customer')->id())
             ->get();
-        // return $wishlists;
+
         return view('user.wishlist', [
             'wishlists' => $wishlists
         ]);

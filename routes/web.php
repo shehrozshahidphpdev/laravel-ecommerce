@@ -24,6 +24,11 @@ Route::prefix('admin/')->middleware('auth')->group(function () {
 
 Route::get('demo', [TestController::class, 'demo']);
 
+Route::get('testing', function () {
+    dd('here');
+});
+
+
 Route::fallback(function () {
     echo "<h1>Sorry Page not found.... </h1>";
 });
