@@ -5,9 +5,10 @@ namespace App\Providers;
 use App\Models\Admin\Category;
 use App\Models\User\Wishlist;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Paginator::useBootstrapFour();
+
+
         $categories = Category::with('children.children')->whereNull('parent_id')->get();
         view()->share('categories', $categories);
 

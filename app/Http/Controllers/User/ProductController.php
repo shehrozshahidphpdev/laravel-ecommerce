@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Category;
+use App\Models\Admin\Color;
 use App\Models\Admin\Product;
 use App\Models\User\Wishlist;
 use Illuminate\Http\Request;
@@ -41,9 +42,6 @@ class ProductController extends Controller
             'name' => $product->name
         ];
 
-        // return $data['breadcrumbs'];
-
-
         $product = Product::with(['category', 'images', 'colors', 'tag', 'specifications'])
             ->where('slug', $productSlug)
             ->first();
@@ -62,8 +60,19 @@ class ProductController extends Controller
         $products = $category->products()->with(['images', 'colors', 'category:id,name'])
             ->where('is_active', 1)
             ->paginate(15);
-        // return $products;
 
-        return view('user.collections', compact('products', 'breadCrumb'));
+        // get the colors with products who has the category matching the above category
+        $colors = Color::whereHas('products', function ($query) use ($category) {
+            $query->where('category_id', $category->id)
+                ->where('is_active', 1);
+        })
+            ->withCount(['products as product_count' => function ($query) use ($category) {
+                $query->where('category_id', $category->id)
+                    ->where('is_active', 1);
+            }])
+            ->get();
+        // return $colors;
+
+        return view('user.collections', compact('products', 'breadCrumb', 'colors'));
     }
 }
