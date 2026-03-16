@@ -13,7 +13,7 @@ export default defineConfig({
                 "resources/css/admin.css",
                 "resources/js/admin.js",
             ],
-            refresh: true,
+            // refresh: true,
         }),
     ],
 });

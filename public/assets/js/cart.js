@@ -1,5 +1,11 @@
+import spinner from "./spinner.js";
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("cartttttttt.js loaded");
+  console.log("cart.js loaded");
+  if (typeof window.cartRoute === "undefined" && !winndow.cartRoute) {
+    console.log("cartroute is not defined");
+    return;
+  }
+
   const cartBtns = document.querySelectorAll(".tp-product-add-cart-btn");
   const miniCartContent = document.querySelector(".cartmini__widget");
   const cartCountBadge = document.querySelector(".cart-count-badge");
@@ -10,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     btn.addEventListener("click", function () {
       let cartProductId = this.dataset.id;
 
-      fetch(cartRoute, {
+      fetch(window.cartRoute, {
         method: "POST",
         headers: {
           "X-CSRF-TOKEN": document
@@ -194,19 +200,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const productId = this.dataset.id;
     const productQty = quantityInput.value;
 
+    cartBtn.innerHTML = spinner;
+
     fetch(cartRoute, {
       method: "post",
       headers: {
         "X-CSRF-TOKEN": document
           .querySelector('meta[name="csrf-token"]')
           .getAttribute("content"),
-        "Content-Type": "applicaiton/json",
+        "Content-Type": "application/json",
         Accept: "application/json",
       },
       body: JSON.stringify({ id: productId, quantity: productQty }),
     })
       .then((response) => response.json())
       .then((data) => {
+        cartBtn.innerHTML = "Add To Cart";
         let subtotal = 0;
         if (data.status === true) {
           console.log(data.cartItems);

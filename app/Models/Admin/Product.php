@@ -2,8 +2,9 @@
 
 namespace App\Models\Admin;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model
@@ -62,6 +63,11 @@ class Product extends Model
         }
 
         return implode('/', $slugs);
+    }
+
+    public function scopeSlug(Builder $query, $slug)
+    {
+        return $query->where('slug', $slug);
     }
 
     protected function slug()

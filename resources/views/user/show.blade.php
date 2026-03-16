@@ -45,28 +45,54 @@
             <div class="tp-product-details-top pb-115">
                <div class="container">
                   <div class="row">
-                     <div class="col-xl-7 col-lg-6">
-                        <div class="tp-product-details-thumb-wrapper tp-tab d-sm-flex">
-                           <nav>
-                              <div class="nav nav-tabs flex-sm-column " id="productDetailsNavThumb" role="tablist">
-                                @foreach ($product->images as $image)
-                                   <button class="nav-link active" id="nav-1-tab" data-bs-toggle="tab" data-bs-target="#nav-1" type="button" role="tab" aria-controls="nav-1" aria-selected="true">
-                                      <img src="{{ asset('storage/' . $image->image_path) }}" alt="thumb-image">
-                                   </button> 
-                                @endforeach
-                              </div>
-                           </nav>
-                           <div class="tab-content m-img" id="productDetailsNavContent">
-                             @foreach ($product->images as $image)
-                                  <div class="tab-pane fade show active" id="nav-1" role="tabpanel" aria-labelledby="nav-1-tab" tabindex="0">
-                                      <div class="tp-product-details-nav-main-thumb">
-                                          <img src="{{ asset('storage/' . $image->image_path) }}" alt="main-image-frame">
-                                  </div>
-                              </div>
-                            @endforeach
-                            </div>
+                    <div class="col-xl-7 col-lg-6">
+                     <div class="tp-product-details-thumb-wrapper tp-tab d-sm-flex">
+
+                     <nav>
+                     <div class="nav nav-tabs flex-sm-column" id="productDetailsNavThumb" role="tablist">
+
+                     @foreach ($product->images as $image)
+                        <button 
+                        class="nav-link {{ $loop->first ? 'active' : '' }}" 
+                        id="nav-{{ $loop->index }}-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#nav-{{ $loop->index }}"
+                        type="button"
+                        role="tab"
+                        aria-controls="nav-{{ $loop->index }}"
+                        aria-selected="{{ $loop->first ? 'true' : 'false' }}"
+                        >
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="thumb-image">
+                        </button>
+                     @endforeach
+
+                     </div>
+                     </nav>
+
+                     <div class="tab-content m-img" id="productDetailsNavContent">
+
+                     @foreach ($product->images as $image)
+
+                        <div 
+                        class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" 
+                        id="nav-{{ $loop->index }}"
+                        role="tabpanel"
+                        aria-labelledby="nav-{{ $loop->index }}-tab"
+                        tabindex="0"
+                        >
+
+                        <div class="tp-product-details-nav-main-thumb">
+                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="main-image-frame">
                         </div>
-                     </div> <!-- col end -->
+
+                        </div>
+
+                     @endforeach
+
+                     </div>
+
+                     </div>
+                     </div>
                      <div class="col-xl-5 col-lg-6">
                         <div class="tp-product-details-wrapper">
                            <div class="tp-product-details-category">

@@ -154,7 +154,7 @@
 
     </main>
     <script>
-      const updateCartRoute = "{{ route('cart.update') }}";
+      window.updateCartRoute = "{{ route('cart.update') }}";
     </script>
       <script src="{{ asset('assets/js/main-cart.js') }}"></script>
 </x-user.app-layout>

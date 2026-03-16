@@ -14,7 +14,7 @@
           <div class="col-xl-2 col-lg-2 col-md-4 col-6">
             <div class="logo">
               <a href="{{ route('user.home') }}">
-                <img src="{{ asset('user/assets/img/logo/logo.svg') }}" alt="logo">
+                <img src="{{ asset('assets/photos/icons8-shopify-50.png') }}" alt="logo">
               </a>
             </div>
           </div>
@@ -217,42 +217,9 @@
               <div class="main-menu menu-style-1">
                 <nav class="tp-main-menu-content">
                   <ul>
-                    <li class="has-mega-menu">
-                      <a href="index.html">Home</a>
-                    </li>
-
-                    <li class="has-dropdown has-mega-menu ">
-
-                      <a href="shop.html">Products</a>
-                      <ul class="tp-submenu tp-mega-menu mega-menu-style-2">
-                        <!-- first col -->
-                        <li class="has-dropdown">
-                          <a href="shop.html" class="mega-menu-title">Shop Page</a>
-                          <ul class="tp-submenu">
-                            <li><a href="shop-category.html">Only Categories</a></li>
-                            <li><a href="shop-filter-offcanvas.html">Shop Grid</a></li>
-                            <li><a href="shop.html">Shop Grid with Sideber</a></li>
-                            <li><a href="shop-list.html">Shop List</a></li>
-                            <li><a href="shop-category.html">Categories</a></li>
-                            <li><a href="product-details.html">Product Details</a></li>
-                            <li><a href="product-details-progress.html">Product Details Progress</a></li>
-                          </ul>
-                        </li>
-                        <!-- third col -->
-                        <li class="has-dropdown">
-                          <a href="shop.html" class="mega-menu-title">eCommerce</a>
-                          <ul class="tp-submenu">
-                            <li><a href="cart.html">Shopping Cart</a></li>
-                            <li><a href="order.html">Track Your Order</a></li>
-                            <li><a href="compare.html">Compare</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="profile.html">My account</a></li>
-                          </ul>
-                        </li>
-                      </ul>
-                    </li>
                     <li><a href="contact.html">Contact</a></li>
+                    <li><a href="contact.html">About Us</a></li>
+                    <li><a href="contact.html">Track Your Order</a></li>
                   </ul>
                 </nav>
               </div>

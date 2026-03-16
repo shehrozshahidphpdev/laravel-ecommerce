@@ -100,6 +100,8 @@ class Category extends Model
         return $ids;
     }
 
+
+
     /**
      * Build a slash-delimited slug path for a category, including all
      * ancestors. This is used for frontend URLs that map to the
@@ -128,5 +130,10 @@ class Category extends Model
         }
 
         return implode('/', $slugs);
+    }
+
+    public static function getChildrenCategories($category)
+    {
+        return $category->children;
     }
 }

@@ -9,7 +9,7 @@
               <div class="tp-footer-widget-content">
                 <div class="tp-footer-logo">
                   <a href="index.html">
-                    <img src="{{ asset('user/assets/img/logo/logo.svg') }}" alt="logo">
+                    <img src="{{ asset('assets/photos/icons8-shopify-50.png') }}" alt="logo">
                   </a>
                 </div>
                 </p>

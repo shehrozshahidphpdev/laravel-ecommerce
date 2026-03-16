@@ -456,7 +456,7 @@
                               <a href="shop.html">{{ $product->category->name }}</a>
                             </div>
                             <h3 class="tp-product-title">
-                              <a href="{{ route('products.show', $product->slug) }}">
+                              <a href="{{ route('products.show', $product->full_slug) }}">
                                 {{ $product->name }}
                               </a>
                             </h3>
@@ -493,7 +493,7 @@
                      <div class="col-xl-3 col-lg-3 col-sm-6">
                         <div class="tp-product-item transition-3 mb-25">
                           <div class="tp-product-thumb p-relative fix m-img">
-                            <a href="{{ route('products.show', $product->slug) }}">
+                            <a href="{{ route('products.show', $product->full_slug) }}">
                               @foreach ($product->images as $image)
                                 <img src="{{ asset('storage/' . $image->image_path) }}" alt=" product-electronic">
                                 @php
@@ -581,7 +581,7 @@
                               <a href="shop.html">{{ $product->category->name }}</a>
                             </div>
                             <h3 class="tp-product-title">
-                              <a href="{{ route('products.show', $product->slug) }}">
+                              <a href="{{ route('products.show', $product->full_slug) }}">
                                 {{ $product->name }}
                               </a>
                             </h3>
@@ -618,7 +618,7 @@
                      <div class="col-xl-3 col-lg-3 col-sm-6">
                         <div class="tp-product-item transition-3 mb-25">
                           <div class="tp-product-thumb p-relative fix m-img">
-                            <a href="{{ route('products.show', $product->slug) }}">
+                            <a href="{{ route('products.show', $product->full_slug) }}">
                               @foreach ($product->images as $image)
                                 <img src="{{ asset('storage/' . $image->image_path) }}" alt=" product-electronic">
                                 @php
@@ -706,7 +706,7 @@
                               <a href="shop.html">{{ $product->category->name }}</a>
                             </div>
                             <h3 class="tp-product-title">
-                              <a href="{{ route('products.show', $product->slug) }}">
+                              <a href="{{ route('products.show', $product->full_slug) }}">
                                 {{ $product->name }}
                               </a>
                             </h3>
@@ -788,7 +788,7 @@
                   @foreach ($productsOnDeal as $product)
                     <div class="tp-product-offer-item tp-product-item transition-3 swiper-slide h-100">
                         <div class="tp-product-thumb p-relative fix m-img">
-                          <a href="{{ route('products.show', $product->slug) }}">
+                          <a href="{{ route('products.show', $product->full_slug) }}">
                             <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" alt="
                               product-electronic">
                           </a>
@@ -878,7 +878,7 @@
                             <a href="shop.html">{{ $product->category?->name }}</a>
                           </div>
                           <h3 class="tp-product-title">
-                            <a href="{{ route('products.show', $product->slug) }}">
+                            <a href="{{ route('products.show', $product->full_slug) }}">
                               {{ $product->name }}
                             </a>
                           </h3>
@@ -994,7 +994,7 @@
             <div class="col-xl-4 col-sm-6">
               <div class="tp-product-item p-relative transition-3 mb-25">
                 <div class="tp-product-thumb p-relative fix m-img">
-                  <a href="{{ route('products.show', $product->slug) }}">
+                  <a href="{{ route('products.show', $product->full_slug) }}">
                     <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" alt=" product-electronic">
                   </a>
 
@@ -1070,7 +1070,7 @@
                     <a href="shop.html">Electric</a>
                   </div>
                   <h3 class="tp-product-title">
-                    <a href="{{ route('products.show', $product->slug) }}">
+                    <a href="{{ route('products.show', $product->full_slug) }}">
                       Yamaha Electric Violin-YEV104BL-Black String
                     </a>
                   </h3>
@@ -1147,7 +1147,7 @@
                     <!-- product content -->
                   <div class="tp-product-item transition-3 mb-25 swiper-slide ">
                     <div class="tp-product-thumb p-relative fix m-img">
-                      <a href="{{ route('products.show', $product->slug) }}">
+                      <a href="{{ route('products.show', $product->full_slug) }}">
                         <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" alt="
                                                     product-electronic">
                       </a>
@@ -1231,7 +1231,7 @@
                         <a href="shop.html">{{ $product->category->name }}</a>
                       </div>
                       <h3 class="tp-product-title">
-                        <a href="{{ route('products.show', $product->slug) }}">
+                        <a href="{{ route('products.show', $product->full_slug) }}">
                          {{ $product->name }}
                         </a>
                       </h3>
@@ -1289,7 +1289,7 @@
 
                 <div class="tp-product-sm-item d-flex align-items-center">
                   <div class="tp-product-thumb mr-25 fix">
-                    <a href="{{ route('products.show', $product->slug) }}">
+                    <a href="{{ route('products.show', $product->full_slug) }}">
                       <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" alt="discounted Product Image">
                     </a>
                   </div>
@@ -1298,7 +1298,7 @@
                       <a href="shop.html">{{$product->category->name}}</a>
                     </div>
                     <h3 class="tp-product-title">
-                      <a href="{{ route('products.show', $product->slug) }}">
+                      <a href="{{ route('products.show', $product->full_slug) }}">
                         {{ $product->name }}
                       </a>
                     </h3>
@@ -1341,7 +1341,7 @@
                 @foreach ($featuredProducts as $key => $product)
                     <div class="tp-product-sm-item d-flex align-items-center">
                       <div class="tp-product-thumb mr-25 fix">
-                        <a href="{{ route('products.show', $product->slug) }}">
+                        <a href="{{ route('products.show', $product->full_slug) }}">
                           <img src="{{ asset('storage/' . $product->images[0]->image_path) }}" alt="featured product image">
                         </a>
                       </div>
@@ -1350,7 +1350,7 @@
                           <a href="shop.html">{{ $product->category->name }}</a>
                         </div>
                         <h3 class="tp-product-title">
-                          <a href="{{ route('products.show', $product->slug) }}">{{ $product->name }}</a>
+                          <a href="{{ route('products.show', $product->full_slug) }}">{{ $product->name }}</a>
                         </h3>
                         <div class="tp-product-rating d-sm-flex align-items-center">
                           <div class="tp-product-rating-icon">
@@ -1390,7 +1390,7 @@
             <div class="mr-20 tp-product-sm-wrapper">
               <div class="tp-product-sm-item d-flex align-items-center">
                 <div class="tp-product-thumb mr-25 fix">
-                  <a href="{{ route('products.show', $product->slug) }}">
+                  <a href="{{ route('products.show', $product->full_slug) }}">
                     <img src="{{ asset('user/assets/img/product/sm/product-sm-7.jpg') }}" alt="">
                   </a>
                 </div>
@@ -1399,7 +1399,7 @@
                     <a href="shop.html">Usb Flash Disk</a>
                   </div>
                   <h3 class="tp-product-title">
-                    <a href="{{ route('products.show', $product->slug) }}">Metal Usb 3.0 Pen Drive 2TB</a>
+                    <a href="{{ route('products.show', $product->full_slug) }}">Metal Usb 3.0 Pen Drive 2TB</a>
                   </h3>
                   <div class="tp-product-rating d-sm-flex align-items-center">
                     <div class="tp-product-rating-icon">
@@ -1420,7 +1420,7 @@
               </div>
               <div class="tp-product-sm-item d-flex align-items-center">
                 <div class="tp-product-thumb mr-25 fix">
-                  <a href="{{ route('products.show', $product->slug) }}">
+                  <a href="{{ route('products.show', $product->full_slug) }}">
                     <img src="{{ asset('user/assets/img/product/sm/product-sm-8.jpg') }}" alt="">
                   </a>
                 </div>
@@ -1429,7 +1429,7 @@
                     <a href="shop.html">HawkEye</a>
                   </div>
                   <h3 class="tp-product-title">
-                    <a href="{{ route('products.show', $product->slug) }}">HawkEye Fishtrax</a>
+                    <a href="{{ route('products.show', $product->full_slug) }}">HawkEye Fishtrax</a>
                   </h3>
                   <div class="tp-product-rating d-sm-flex align-items-center">
                     <div class="tp-product-rating-icon">
@@ -1450,7 +1450,7 @@
               </div>
               <div class="tp-product-sm-item d-flex align-items-center">
                 <div class="tp-product-thumb mr-25 fix">
-                  <a href="{{ route('products.show', $product->slug) }}">
+                  <a href="{{ route('products.show', $product->full_slug) }}">
                     <img src="{{ asset('user/assets/img/product/sm/product-sm-9.jpg') }}" alt="">
                   </a>
                 </div>
@@ -1459,7 +1459,7 @@
                     <a href="shop.html">Tablet</a>
                   </div>
                   <h3 class="tp-product-title">
-                    <a href="{{ route('products.show', $product->slug) }}">Galaxy Tab S6 Android</a>
+                    <a href="{{ route('products.show', $product->full_slug) }}">Galaxy Tab S6 Android</a>
                   </h3>
                   <div class="tp-product-rating d-sm-flex align-items-center">
                     <div class="tp-product-rating-icon">
@@ -1539,7 +1539,6 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="tp-product-modal-content d-lg-flex align-items-start">
-          <h1>ee2112e12</h1>
 
             {{-- modal main content to show--}}     
         </div>

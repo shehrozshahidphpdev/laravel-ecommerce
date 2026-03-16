@@ -1,7 +1,7 @@
 @props(['title', 'categories'])
 
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html class="no-js" lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -27,8 +27,7 @@
 
 
     <x-toast />
-
-    {{-- Rest of your components --}}
+    {{-- partials --}}
     <x-user.partials.top-navigate />
     <x-user.partials.side-menu />
     <x-user.partials.mobile-menu />
@@ -61,26 +60,22 @@
     <script src="{{ asset('user/assets/js/imagesloaded-pkgd.js') }}"></script>
     <script src="{{ asset('user/assets/js/ajax-form.js') }}"></script>
     <script src="{{ asset('user/assets/js/main.js') }}"></script>
-    {{-- Toast JS - KEEP THIS AT THE END --}}
-    {{-- MOVE TOAST COMPONENT HERE - RIGHT AFTER BODY TAG --}}
     <script src="{{ asset('assets/js/toast.js') }}"></script>
     {{-- intel tel input cdn script link --}}
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@23.0.4/build/js/intlTelInput.min.js"></script>
 
     <script>
-        // expose these values on the window so any script file can use them
         window.cartRoute = "{{ route('products.mini-cart') }}";
         window.deleteCartRoute = "{{ route('products.cart.delete') }}";
         window.addWishListRoute = "{{ route('wishlist.store') }}";
         window.quickViewUrl = "{{ route('product.quickview') }}";
         window.baseStorageUrl = "{{ asset('storage') }}/";
-        // temporary debug log left during development
-        console.log("routing globals injected");
+        console.log("ja globals  vars injected");
     </script>
-    <script src="{{ asset('assets/js/quick-view.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/quick-view.js') }}"></script>
     <script src="{{ asset('assets/js/discount-timer.js') }}"></script>
     <script src="{{ asset('assets/js/wishlist.js') }}"></script>
-    <script src="{{ asset('assets/js/cart.js') }}"></script>
+    <script type="module" src="{{ asset('assets/js/cart.js') }}"></script>
     @stack('script')
 </body>
 

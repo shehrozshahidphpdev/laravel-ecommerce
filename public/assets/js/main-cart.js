@@ -1,4 +1,8 @@
+import spinner from "./spinner";
+
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("main-cart.js loaded");
+
   document.addEventListener(
     "click",
     function (e) {
@@ -21,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const productId = item.dataset.id;
 
-      fetch(deleteCartRoute, {
+      fetch(window.deleteCartRoute, {
         method: "delete",
         headers: {
           "X-CSRF-TOKEN": document
@@ -48,7 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
   increaseBtn.forEach((item) => {
     item.addEventListener("click", function () {
       console.log("from main cart");
-
       const container = item.closest(".tp-product-quantity");
       const input = container.querySelector(".tp-cart-input");
       input.value = parseInt(input.value) + 1;
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
       cartItems.push({ id: id, qty: qty });
     });
 
-    fetch(updateCartRoute, {
+    fetch(window.updateCartRoute, {
       method: "post",
       headers: {
         "X-CSRF-TOKEN": document
